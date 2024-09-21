@@ -1,13 +1,13 @@
-package ru.mpu.horse_racings;
+package ru.mpu.horse_races;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HorseRacingsApplication {
+public class HorseRacesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HorseRacingsApplication.class, args);
+		SpringApplication.run(HorseRacesApplication.class, args);
 	}
 
 }
