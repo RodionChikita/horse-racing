@@ -29,8 +29,8 @@ public class RaceResult {
     @Column(name = "place", nullable = false)
     private String place;
 
-    @Column(name = "time", nullable = false)
-    private Time time;
+    @Column(name = "horse_time", nullable = false)
+    private Time horceTime;
 
     @ManyToOne(targetEntity = Race.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Race race;

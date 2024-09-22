@@ -1,11 +1,11 @@
 spring:
   flyway:
     enabled: true
-  #    locations: "classpath:db.migration"
+    locations: "classpath:db/migration"
   datasource:
-    url: jdbc:postgresql://localhost:8283/otus
-    password: otus
-    username: otus
+    url: jdbc:postgresql://localhost:8284/races
+    password: mpu
+    username: mpu
   jpa:
     generate-ddl: false
     hibernate:

@@ -13,7 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -29,11 +30,11 @@ public class Race {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "date", nullable = false)
-    private Date date;
+    @Column(name = "race_date", nullable = false)
+    private LocalDate raceDate;
 
-    @Column(name = "time", nullable = false)
-    private Date time;
+    @Column(name = "race_time", nullable = false)
+    private LocalTime raceTime;
 
     @Column(name = "location", nullable = false)
     private String location;

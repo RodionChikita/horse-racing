@@ -26,8 +26,8 @@ public class Horse {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
-    @Column(name = "genre", nullable = false)
-    private GenreEnum genreEnum;
+    @Column(name = "gender", nullable = false)
+    private GenderEnum genreEnum;
 
     @Column(name = "age", nullable = false)
     private byte age;

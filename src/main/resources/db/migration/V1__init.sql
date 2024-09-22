@@ -1,4 +1,4 @@
-CREATE TYPE genre AS ENUM ('MALE', 'FEMALE');
+create type gender AS enum ('MALE', 'FEMALE');
 
 create table
 owners(
@@ -13,7 +13,7 @@ create table
 horses(
     id bigserial,
     nickname varchar(255),
-    genre varchar(255),
+    gender varchar(255),
     age smallint,
     owner_id bigint references owners(id) on delete cascade,
     primary key (id)
@@ -30,35 +30,40 @@ jockeys(
 );
 
 create table
-books_genres(
-    book_id bigint references books(id) on delete cascade,
-    genre_id bigint references genres(id) on delete cascade,
-    primary key (book_id, genre_id)
-);
-
-create table
-comments(
+races(
     id bigserial,
-    book_id bigint references books(id) on delete cascade,
-    text varchar(255),
+    name varchar(255),
+    race_date date,
+    race_time time,
+    location varchar(255),
     primary key (id)
 );
 
-insert into authors(full_name)
-values ('Author_1'), ('Author_2'), ('Author_3');
+create table
+race_results(
+    id bigserial,
+    place varchar(255),
+    horse_time time,
+    race_id bigint references races(id) on delete cascade,
+    jockey_id bigint references jockeys(id) on delete cascade,
+    horse_id bigint references horses(id) on delete cascade,
+    primary key (book_id, genre_id)
+);
 
-insert into genres(name)
-values ('Genre_1'), ('Genre_2'), ('Genre_3'),
-       ('Genre_4'), ('Genre_5'), ('Genre_6');
+insert into owners(name, address, phone_number)
+values ('Owner_1', 'Address_1', '88888888881'), ('Owner_2', 'Address_2', '88888888882'), ('Owner_3', 'Address_3', '88888888883');
 
-insert into books(title, author_id)
-values ('BookTitle_1', 1), ('BookTitle_2', 2), ('BookTitle_3', 3);
+insert into horses(nickname, gender, age, owner_id)
+values ('Nickname_1', MALE, 15), ('Nickname_2', FEMALE, 20), ('Nickname_3', MALE, 17);
 
-insert into books_genres(book_id, genre_id)
+insert into jockeys(name, address, age)
+values ('Jockey_1', 'Address_1', 20), ('Jockey_2', 'Address_2', 30), ('Jockey_3', 'Address_3', 40);
+
+insert into races(name, race_date, race_time, location)
 values (1, 1),   (1, 2),
        (2, 3),   (2, 4),
        (3, 5),   (3, 6);
 
-insert into comments(text, book_id)
+insert into race_results(place, horse_time, race_id, jockey_id, horse_id)
 values ('comment_01', 1), ('comment_02', 1), ('comment_03', 1), ('comment_04', 1), ('comment_05', 1), ('comment_06', 2),
        ('comment_07', 2), ('comment_08',3), ('comment_09', 3), ('comment_10', 3), ('comment_11', 3), ('comment_12', 3);
