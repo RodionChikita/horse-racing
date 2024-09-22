@@ -33,8 +33,4 @@ public class Owner {
 
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
-
-    @OneToMany(targetEntity = Horse.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "horse_id")
-    private List<Horse> horses;
 }

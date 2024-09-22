@@ -33,7 +33,6 @@ public class RaceResult {
     private Time time;
 
     @ManyToOne(targetEntity = Race.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "race_id")
     private Race race;
 
     @OneToOne(targetEntity = Jockey.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

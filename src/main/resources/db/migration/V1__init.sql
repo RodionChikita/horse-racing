@@ -1,22 +1,31 @@
-create table
-authors(
-    id bigserial,
-    full_name varchar(255),
-    primary key (id)
-);
+CREATE TYPE genre AS ENUM ('MALE', 'FEMALE');
 
 create table
-genres(
+owners(
     id bigserial,
     name varchar(255),
+    address varchar(255),
+    phone_number varchar(255),
     primary key (id)
 );
 
 create table
-books(
+horses(
     id bigserial,
-    title varchar(255),
-    author_id bigint references authors (id) on delete cascade,
+    nickname varchar(255),
+    genre varchar(255),
+    age smallint,
+    owner_id bigint references owners(id) on delete cascade,
+    primary key (id)
+);
+
+create table
+jockeys(
+    id bigserial,
+    name varchar(255),
+    address varchar(255),
+    age smallint,
+    rating int,
     primary key (id)
 );
 
