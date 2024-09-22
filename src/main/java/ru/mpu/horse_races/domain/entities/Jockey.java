@@ -18,12 +18,16 @@ import lombok.Setter;
 public class Jockey {
     @Id
     private Long id;
+
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "address", nullable = false)
     private String address;
+
     @Column(name = "age", nullable = false)
     private byte age;
+
     @Column(name = "rating", nullable = false)
     private int rating;
 }

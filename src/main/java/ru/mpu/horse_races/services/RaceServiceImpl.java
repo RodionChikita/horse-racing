@@ -6,6 +6,6 @@ import ru.mpu.horse_races.repositories.RaceRepository;
 
 @Service
 @RequiredArgsConstructor
-public class RaceServiceImpl implements RaceService{
+public class RaceServiceImpl implements RaceService {
     private final RaceRepository raceRepository;
 }
