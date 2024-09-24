@@ -14,13 +14,15 @@ public class JockeyServiceImpl implements JockeyService {
     private final JockeyRepository jockeyRepository;
 
     @Override
-    public void insert(CreateOrUpdateJockeyDtoRq jockey) {
+    public JockeyDto insert(CreateOrUpdateJockeyDtoRq jockey) {
 
+        return null;
     }
 
     @Override
-    public void update(CreateOrUpdateJockeyDtoRq jockey) {
+    public JockeyDto update(CreateOrUpdateJockeyDtoRq jockey) {
 
+        return null;
     }
 
     @Override

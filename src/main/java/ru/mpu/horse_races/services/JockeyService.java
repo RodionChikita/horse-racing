@@ -6,9 +6,9 @@ import ru.mpu.horse_races.domain.dtos.JockeyDto;
 import java.util.List;
 
 public interface JockeyService {
-    void insert(CreateOrUpdateJockeyDtoRq jockey);
+    JockeyDto insert(CreateOrUpdateJockeyDtoRq jockey);
 
-    void update(CreateOrUpdateJockeyDtoRq jockey);
+    JockeyDto update(CreateOrUpdateJockeyDtoRq jockey);
 
     List<JockeyDto> findAll();
 }

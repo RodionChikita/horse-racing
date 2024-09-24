@@ -14,13 +14,15 @@ public class RaceServiceImpl implements RaceService {
     private final RaceRepository raceRepository;
 
     @Override
-    public void insert(CreateOrUpdateRaceDtoRq race) {
+    public RaceDto insert(CreateOrUpdateRaceDtoRq race) {
 
+        return null;
     }
 
     @Override
-    public void update(CreateOrUpdateRaceDtoRq race) {
+    public RaceDto update(CreateOrUpdateRaceDtoRq race) {
 
+        return null;
     }
 
     @Override

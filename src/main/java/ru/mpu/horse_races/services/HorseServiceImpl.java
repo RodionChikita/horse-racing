@@ -14,13 +14,13 @@ public class HorseServiceImpl implements HorseService {
     private final HorseRepository horseRepository;
 
     @Override
-    public void insert(CreateOrUpdateHorseDtoRq horse) {
-
+    public HorseDto insert(CreateOrUpdateHorseDtoRq horse) {
+        return null;
     }
 
     @Override
-    public void update(CreateOrUpdateHorseDtoRq horse) {
-
+    public HorseDto update(CreateOrUpdateHorseDtoRq horse) {
+        return null;
     }
 
     @Override

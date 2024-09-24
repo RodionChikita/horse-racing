@@ -6,9 +6,9 @@ import ru.mpu.horse_races.domain.dtos.OwnerDto;
 import java.util.List;
 
 public interface OwnerService {
-    void insert(CreateOrUpdateOwnerDtoRq owner);
+    OwnerDto insert(CreateOrUpdateOwnerDtoRq owner);
 
-    void update(CreateOrUpdateOwnerDtoRq owner);
+    OwnerDto update(CreateOrUpdateOwnerDtoRq owner);
 
     List<OwnerDto> findAll();
 }

@@ -6,9 +6,9 @@ import ru.mpu.horse_races.domain.dtos.RaceDto;
 import java.util.List;
 
 public interface RaceService {
-    void insert(CreateOrUpdateRaceDtoRq race);
+    RaceDto insert(CreateOrUpdateRaceDtoRq race);
 
-    void update(CreateOrUpdateRaceDtoRq race);
+    RaceDto update(CreateOrUpdateRaceDtoRq race);
 
     List<RaceDto> findAll();
 }

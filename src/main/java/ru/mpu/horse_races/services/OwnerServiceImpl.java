@@ -14,13 +14,15 @@ public class OwnerServiceImpl implements OwnerService {
     private final OwnerRepository ownerRepository;
 
     @Override
-    public void insert(CreateOrUpdateOwnerDtoRq owner) {
+    public OwnerDto insert(CreateOrUpdateOwnerDtoRq owner) {
 
+        return null;
     }
 
     @Override
-    public void update(CreateOrUpdateOwnerDtoRq owner) {
+    public OwnerDto update(CreateOrUpdateOwnerDtoRq owner) {
 
+        return null;
     }
 
     @Override

@@ -6,9 +6,9 @@ import ru.mpu.horse_races.domain.dtos.HorseDto;
 import java.util.List;
 
 public interface HorseService {
-    void insert(CreateOrUpdateHorseDtoRq horse);
+    HorseDto insert(CreateOrUpdateHorseDtoRq horse);
 
-    void update(CreateOrUpdateHorseDtoRq horse);
+    HorseDto update(CreateOrUpdateHorseDtoRq horse);
 
     List<HorseDto> findAll();
 }
