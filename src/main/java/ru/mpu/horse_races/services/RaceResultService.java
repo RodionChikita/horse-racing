@@ -7,4 +7,6 @@ public interface RaceResultService {
     RaceResultDto insert(CreateOrUpdateRaceResultDtoRq raceResult);
 
     RaceResultDto update(CreateOrUpdateRaceResultDtoRq raceResult);
+
+    RaceResultDto findById(Long id);
 }

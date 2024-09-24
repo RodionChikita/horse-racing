@@ -11,4 +11,6 @@ public interface RaceService {
     RaceDto update(CreateOrUpdateRaceDtoRq race);
 
     List<RaceDto> findAll();
+
+    RaceDto findById(Long id);
 }
