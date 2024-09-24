@@ -11,4 +11,6 @@ public interface JockeyService {
     JockeyDto update(CreateOrUpdateJockeyDtoRq jockey);
 
     List<JockeyDto> findAll();
+
+    JockeyDto findById(Long id);
 }

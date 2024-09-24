@@ -11,4 +11,6 @@ public interface OwnerService {
     OwnerDto update(CreateOrUpdateOwnerDtoRq owner);
 
     List<OwnerDto> findAll();
+
+    OwnerDto findById(Long id);
 }

@@ -4,9 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateOwnerDtoRq;
 import ru.mpu.horse_races.domain.dtos.OwnerDto;
+import ru.mpu.horse_races.domain.entities.Owner;
+import ru.mpu.horse_races.exceptions.NotFoundException;
+import ru.mpu.horse_races.mappers.MappersToDto;
+import ru.mpu.horse_races.mappers.MappersToEntity;
 import ru.mpu.horse_races.repositories.OwnerRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,18 +20,29 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public OwnerDto insert(CreateOrUpdateOwnerDtoRq owner) {
-
-        return null;
+        return MappersToDto.MAP_TO_OWNER_DTO_FUNCTION.apply(ownerRepository
+                .save(MappersToEntity.MAP_TO_OWNER_FUNCTION.apply(owner)));
     }
 
     @Override
     public OwnerDto update(CreateOrUpdateOwnerDtoRq owner) {
-
-        return null;
+        Owner updatedOwner = ownerRepository.findById(owner.getId())
+                .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(owner.getId())));
+        updatedOwner.setAddress(owner.getAddress());
+        updatedOwner.setName(owner.getName());
+        updatedOwner.setPhoneNumber(owner.getPhoneNumber());
+        return MappersToDto.MAP_TO_OWNER_DTO_FUNCTION.apply(ownerRepository.save(updatedOwner));
     }
 
     @Override
     public List<OwnerDto> findAll() {
-        return null;
+        return ownerRepository.findAll().stream().map(MappersToDto.MAP_TO_OWNER_DTO_FUNCTION)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public OwnerDto findById(Long id) {
+        return MappersToDto.MAP_TO_OWNER_DTO_FUNCTION.apply(ownerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(id))));
     }
 }
