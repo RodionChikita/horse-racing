@@ -13,7 +13,7 @@ public class RaceResultServiceImpl implements RaceResultService {
 
     @Override
     public RaceResultDto insert(CreateOrUpdateRaceResultDtoRq raceResult) {
-
+        return null;
     }
 
     @Override
