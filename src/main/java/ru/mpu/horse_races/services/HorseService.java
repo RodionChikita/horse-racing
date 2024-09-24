@@ -11,4 +11,6 @@ public interface HorseService {
     HorseDto update(CreateOrUpdateHorseDtoRq horse);
 
     List<HorseDto> findAll();
+
+    HorseDto findById(Long id);
 }
