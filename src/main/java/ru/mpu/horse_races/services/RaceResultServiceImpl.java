@@ -62,4 +62,9 @@ public class RaceResultServiceImpl implements RaceResultService {
         return MappersToDto.MAP_TO_RACE_RESULT_DTO_FUNCTION.apply(raceResultRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Race result with id %d not found".formatted(id))));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        raceResultRepository.deleteById(id);
+    }
 }

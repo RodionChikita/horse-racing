@@ -57,4 +57,10 @@ public class HorseServiceImpl implements HorseService {
         return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Horse with id %d not found".formatted(id))));
     }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        horseRepository.deleteById(id);
+    }
 }

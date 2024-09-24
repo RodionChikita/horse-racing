@@ -9,4 +9,6 @@ public interface RaceResultService {
     RaceResultDto update(CreateOrUpdateRaceResultDtoRq raceResult);
 
     RaceResultDto findById(Long id);
+
+    void deleteById(Long id);
 }

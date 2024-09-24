@@ -13,4 +13,6 @@ public interface HorseService {
     List<HorseDto> findAll();
 
     HorseDto findById(Long id);
+
+    void deleteById(Long id);
 }

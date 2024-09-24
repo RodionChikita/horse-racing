@@ -13,4 +13,6 @@ public interface JockeyService {
     List<JockeyDto> findAll();
 
     JockeyDto findById(Long id);
+
+    void deleteById(Long id);
 }

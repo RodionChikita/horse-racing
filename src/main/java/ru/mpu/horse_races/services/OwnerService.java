@@ -13,4 +13,6 @@ public interface OwnerService {
     List<OwnerDto> findAll();
 
     OwnerDto findById(Long id);
+
+    void deleteById(Long id);
 }

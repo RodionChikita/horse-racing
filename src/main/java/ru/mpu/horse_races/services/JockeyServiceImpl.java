@@ -50,4 +50,10 @@ public class JockeyServiceImpl implements JockeyService {
         return MappersToDto.MAP_TO_JOCKEY_DTO_FUNCTION.apply(jockeyRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Jockey with id %d not found".formatted(id))));
     }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        jockeyRepository.deleteById(id);
+    }
 }

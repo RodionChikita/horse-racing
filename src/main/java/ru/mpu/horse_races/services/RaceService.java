@@ -13,4 +13,6 @@ public interface RaceService {
     List<RaceDto> findAll();
 
     RaceDto findById(Long id);
+
+    void deleteById(Long id);
 }

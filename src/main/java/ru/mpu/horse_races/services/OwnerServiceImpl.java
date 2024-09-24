@@ -50,4 +50,9 @@ public class OwnerServiceImpl implements OwnerService {
         return MappersToDto.MAP_TO_OWNER_DTO_FUNCTION.apply(ownerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(id))));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        ownerRepository.deleteById(id);
+    }
 }
