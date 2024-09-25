@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateHorseDtoRq;
 import ru.mpu.horse_races.domain.dtos.HorseDto;
+import ru.mpu.horse_races.domain.dtos.RaceResultDto;
 import ru.mpu.horse_races.domain.entities.Horse;
 import ru.mpu.horse_races.exceptions.NotFoundException;
 import ru.mpu.horse_races.mappers.MappersToDto;
 import ru.mpu.horse_races.repositories.HorseRepository;
 import ru.mpu.horse_races.repositories.OwnerRepository;
+import ru.mpu.horse_races.repositories.RaceResultRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ public class HorseServiceImpl implements HorseService {
     private final HorseRepository horseRepository;
 
     private final OwnerRepository ownerRepository;
+
+    private final RaceResultRepository raceResultRepository;
 
     @Override
     @Transactional
@@ -48,6 +52,13 @@ public class HorseServiceImpl implements HorseService {
     @Transactional(readOnly = true)
     public List<HorseDto> findAll() {
         return horseRepository.findAll().stream().map(MappersToDto.MAP_TO_HORSE_DTO_FUNCTION)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RaceResultDto> findAllHorseRaceResults(Long id) {
+        return raceResultRepository.findByHorseId(id).stream().map(MappersToDto.MAP_TO_RACE_RESULT_DTO_FUNCTION)
                 .collect(Collectors.toList());
     }
 

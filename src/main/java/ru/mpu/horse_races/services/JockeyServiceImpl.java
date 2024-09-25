@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateJockeyDtoRq;
 import ru.mpu.horse_races.domain.dtos.JockeyDto;
+import ru.mpu.horse_races.domain.dtos.RaceResultDto;
 import ru.mpu.horse_races.domain.entities.Jockey;
 import ru.mpu.horse_races.exceptions.NotFoundException;
 import ru.mpu.horse_races.mappers.MappersToDto;
 import ru.mpu.horse_races.mappers.MappersToEntity;
 import ru.mpu.horse_races.repositories.JockeyRepository;
+import ru.mpu.horse_races.repositories.RaceResultRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JockeyServiceImpl implements JockeyService {
     private final JockeyRepository jockeyRepository;
+
+    private final RaceResultRepository raceResultRepository;
 
     @Override
     @Transactional
@@ -41,6 +45,13 @@ public class JockeyServiceImpl implements JockeyService {
     @Transactional(readOnly = true)
     public List<JockeyDto> findAll() {
         return jockeyRepository.findAll().stream().map(MappersToDto.MAP_TO_JOCKEY_DTO_FUNCTION)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RaceResultDto> findAllJockeyRaceResults(Long id) {
+        return raceResultRepository.findByJockeyId(id).stream().map(MappersToDto.MAP_TO_RACE_RESULT_DTO_FUNCTION)
                 .collect(Collectors.toList());
     }
 
