@@ -22,6 +22,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     @Transactional
     public OwnerDto insert(CreateOrUpdateOwnerDtoRq owner) {
+        owner.setId(0L);
         return MappersToDto.MAP_TO_OWNER_DTO_FUNCTION.apply(ownerRepository
                 .save(MappersToEntity.MAP_TO_OWNER_FUNCTION.apply(owner)));
     }

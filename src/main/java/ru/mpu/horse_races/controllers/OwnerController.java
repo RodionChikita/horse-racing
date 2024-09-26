@@ -3,14 +3,7 @@ package ru.mpu.horse_races.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateOwnerDtoRq;
 import ru.mpu.horse_races.domain.dtos.OwnerDto;
 import ru.mpu.horse_races.services.OwnerService;
@@ -20,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/owner")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class OwnerController {
     private final OwnerService ownerService;
 

@@ -22,6 +22,7 @@ public class RaceServiceImpl implements RaceService {
     @Override
     @Transactional
     public RaceDto insert(CreateOrUpdateRaceDtoRq race) {
+        race.setId(0L);
         var raceInserted = new Race(0L, race.getName(), race.getRaceDate(),
                 race.getRaceTime(), race.getLocation(), new ArrayList<>());
         return MappersToDto.MAP_TO_RACE_DTO_FUNCTION.apply(raceRepository.save(raceInserted));

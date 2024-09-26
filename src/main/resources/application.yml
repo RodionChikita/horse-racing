@@ -1,3 +1,18 @@
+#context-path: /app
+#server:
+#  port: 8189
+#  servlet:
+#    context-path: /app
+#springdoc:
+#
+#  api-docs:h: /docs
+#
+#    pat
+#  swagger-ui:
+#    filter: true
+#    tryItOutEnabled: true
+#    path: /swagger
+
 spring:
   flyway:
     enabled: true

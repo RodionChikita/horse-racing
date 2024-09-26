@@ -27,6 +27,7 @@ public class RaceResultServiceImpl implements RaceResultService {
     @Override
     @Transactional
     public RaceResultDto insert(CreateOrUpdateRaceResultDtoRq raceResult) {
+        raceResult.setId(0L);
         var race = raceRepository.findById(raceResult.getRaceId()).orElseThrow(
                 () -> new NotFoundException("Race with id %d not found".formatted(raceResult.getRaceId())));
         var horse = horseRepository.findById(raceResult.getHorseId()).orElseThrow(
