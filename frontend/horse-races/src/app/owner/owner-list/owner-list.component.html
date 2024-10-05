@@ -1,0 +1,40 @@
+<dx-data-grid
+        [dataSource]="owners"
+        [showBorders]="true"
+        [allowColumnResizing]="true"
+        [columnAutoWidth]="true"
+        (onRowInserting)="addOwner($event)"
+        (onRowUpdating)="updateOwner($event)"
+        (onRowRemoving)="deleteOwner($event)"
+>
+    <dxo-editing
+            mode="popup"
+            [allowUpdating]="true"
+            [allowAdding]="true"
+            [allowDeleting]="true"
+            [useIcons]="true">
+
+        <!-- Popup configuration for editing or adding an owner -->
+        <dxo-popup
+                title="Owner Info"
+                [showTitle]="true"
+                [width]="700"
+                [height]="525">
+        </dxo-popup>
+
+        <!-- Form structure in the popup -->
+        <dxo-form>
+            <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+                <dxi-item dataField="name" caption="Name" [isRequired]="true"></dxi-item>
+                <dxi-item dataField="address" caption="Address" [isRequired]="true"></dxi-item>
+                <dxi-item dataField="phoneNumber" caption="Phone Number" [isRequired]="true"></dxi-item>
+            </dxi-item>
+        </dxo-form>
+    </dxo-editing>
+
+    <!-- Data columns -->
+    <dxi-column dataField="name" caption="Name"></dxi-column>
+    <dxi-column dataField="address" caption="Address"></dxi-column>
+    <dxi-column dataField="phoneNumber" caption="Phone Number"></dxi-column>
+
+</dx-data-grid>
