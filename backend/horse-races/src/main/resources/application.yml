@@ -14,10 +14,6 @@
 #    path: /swagger
 
 spring:
-  docker:
-    compose:
-      enabled: true
-      file: docker-compose.yml
   flyway:
     enabled: true
     locations: "classpath:db/migration"
