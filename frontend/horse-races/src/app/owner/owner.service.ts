@@ -7,7 +7,7 @@ import { CreateOrUpdateOwnerDtoRq, OwnerDto } from './owner.models';
   providedIn: 'root'
 })
 export class OwnerService {
-  private apiUrl = 'http://0.0.0.0:8080/api/v1/owner';
+  private apiUrl = 'http://192.168.1.18:8080/api/v1/owner';
 
   constructor(private http: HttpClient) {}
 
