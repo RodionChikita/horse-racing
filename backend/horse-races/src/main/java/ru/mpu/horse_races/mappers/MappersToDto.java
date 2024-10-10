@@ -30,6 +30,5 @@ public class MappersToDto {
                     MAP_TO_JOCKEY_DTO_FUNCTION.apply(r.getJockey()), MAP_TO_HORSE_DTO_FUNCTION.apply(r.getHorse()));
 
     public static final Function<Race, RaceDto> MAP_TO_RACE_DTO_FUNCTION =
-            r -> new RaceDto(r.getId(), r.getName(), r.getRaceDate(), r.getRaceTime(), r.getLocation(),
-                    r.getRaceResults().stream().map(MAP_TO_RACE_RESULT_DTO_FUNCTION).collect(Collectors.toList()));
+            r -> new RaceDto(r.getId(), r.getName(), r.getRaceDate(), r.getRaceTime(), r.getLocation());
 }

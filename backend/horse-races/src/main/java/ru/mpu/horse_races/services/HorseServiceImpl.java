@@ -52,8 +52,8 @@ public class HorseServiceImpl implements HorseService {
     @Override
     @Transactional(readOnly = true)
     public List<HorseDto> findAll() {
-        return horseRepository.findAll().stream().map(MappersToDto.MAP_TO_HORSE_DTO_FUNCTION)
-                .collect(Collectors.toList());
+            return horseRepository.findAll().stream().map(MappersToDto.MAP_TO_HORSE_DTO_FUNCTION)
+                    .collect(Collectors.toList());
     }
 
     @Override

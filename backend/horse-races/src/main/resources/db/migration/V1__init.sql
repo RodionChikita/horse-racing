@@ -13,7 +13,7 @@ create table
 horses(
     id bigserial,
     nickname varchar(255),
-    gender varchar(255),
+    gender gender,
     age smallint,
     owner_id bigint references owners(id) on delete cascade,
     primary key (id)
@@ -56,8 +56,8 @@ values ('Owner_1', 'Address_1', '88888888881'), ('Owner_2', 'Address_2', '888888
 insert into horses(nickname, gender, age, owner_id)
 values ('Nickname_1', 'MALE', 15, 1), ('Nickname_2', 'FEMALE', 20, 2), ('Nickname_3', 'MALE', 17, 3);
 
-insert into jockeys(name, address, age)
-values ('Jockey_1', 'Address_1', 20), ('Jockey_2', 'Address_2', 30), ('Jockey_3', 'Address_3', 40);
+insert into jockeys(name, address, age, rating)
+values ('Jockey_1', 'Address_1', 20, 34), ('Jockey_2', 'Address_2', 30, 45), ('Jockey_3', 'Address_3', 40, 64);
 
 --insert into races(name, race_date, race_time, location)
 --values (1, 1),   (1, 2),

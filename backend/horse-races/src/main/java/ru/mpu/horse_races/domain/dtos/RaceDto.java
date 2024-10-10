@@ -23,6 +23,4 @@ public class RaceDto {
     private LocalTime raceTime;
 
     private String location;
-
-    private List<RaceResultDto> raceResults;
 }

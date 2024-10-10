@@ -14,11 +14,19 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { OwnerListComponent } from './owner/owner-list/owner-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
+import { HorseListComponent } from './horse/horse-list/horse-list.component';
+import { RaceComponent } from './race/race.component';
+import {RaceResultComponent} from './race-result/race-result.component';
+import { JockeyListComponent } from './jockey/jockey-list/jockey-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OwnerListComponent
+    OwnerListComponent,
+    HorseListComponent,
+    RaceComponent,
+    RaceResultComponent,
+    JockeyListComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +42,7 @@ import { AppRoutingModule } from './app-routing.module';
     DxSelectBoxModule,
     AppRoutingModule
   ],
-  providers: [OwnerListComponent],
+  providers: [OwnerListComponent, HorseListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
