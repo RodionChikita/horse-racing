@@ -11,7 +11,7 @@ import ru.mpu.horse_races.services.RaceResultService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/race_result")
-@CrossOrigin(origins = "http://192.168.1.18:4200", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.1.17:4200", maxAge = 3600)
 public class RaceResultController {
     private final RaceResultService raceResultService;
 
