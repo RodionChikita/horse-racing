@@ -1,0 +1,36 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend/horse-races
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/races
+      SPRING_DATASOURCE_USERNAME: mpu
+      SPRING_DATASOURCE_PASSWORD: mpu
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend/horce-races
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: races
+      POSTGRES_USER: mpu
+      POSTGRES_PASSWORD: mpu
+    ports:
+      - "8284:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
