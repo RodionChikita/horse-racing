@@ -14,7 +14,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend/horce-races
+      context: ./frontend/horse-races
     ports:
       - "4200:80"
     depends_on:
