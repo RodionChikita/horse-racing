@@ -40,14 +40,24 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "11mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "bundle",
                   "name": "main",
-                  "maximumWarning": "10mb",
-                  "maximumError": "11mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
+                },
+                {
+                  "type": "allScripts",
+                  "maximumWarning": "4mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "all",
+                  "maximumWarning": "6mb",
+                  "maximumError": "8mb"
                 }
               ],
               "outputHashing": "all"
