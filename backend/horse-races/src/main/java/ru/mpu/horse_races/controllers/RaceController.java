@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/race")
-@CrossOrigin(origins = "http://192.168.1.17:4200", maxAge = 3600)
+@CrossOrigin(origins = "http://192.168.64.10:4200", maxAge = 3600)
 public class RaceController {
     private final RaceService raceService;
 
