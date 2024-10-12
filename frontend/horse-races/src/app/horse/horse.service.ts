@@ -8,7 +8,7 @@ import {RaceResultDto} from "../race-result/race-result.model";
     providedIn: 'root'
 })
 export class HorseService {
-    private baseUrl = 'http://192.168.1.17:8080/api/v1/horse';
+    private baseUrl = 'http://192.168.1.19:8080/api/v1/horse';
 
     constructor(private http: HttpClient) {}
 
