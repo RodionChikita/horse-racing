@@ -8,5 +8,3 @@ RUN mvn clean package -DskipTests
 FROM tomcat:10.1-jdk17
 WORKDIR /usr/local/tomcat/webapps/
 COPY --from=build /app/target/*.war app.war
-
-EXPOSE 8080

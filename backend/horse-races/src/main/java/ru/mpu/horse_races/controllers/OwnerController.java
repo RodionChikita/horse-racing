@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/owner")
-@CrossOrigin(origins = "http://192.168.64.10:4200", maxAge = 3600)
 public class OwnerController {
     private final OwnerService ownerService;
 

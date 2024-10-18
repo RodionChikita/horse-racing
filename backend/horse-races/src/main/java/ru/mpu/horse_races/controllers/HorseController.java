@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/horse")
-@CrossOrigin(origins = "http://192.168.64.10:4200", maxAge = 3600)
 public class HorseController {
     private final HorseService horseService;
 

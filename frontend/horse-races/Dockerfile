@@ -1,12 +1,13 @@
-#STAGE 1
-FROM node:12.7-alpine AS build
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:alpine AS builder
 
-#STAGE 2
-FROM nginx:1.17.1-alpine
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/horse-races /usr/share/nginx/html
+WORKDIR /app
+
+COPY . .
+
+RUN npm install && \
+    npm run build
+
+FROM nginx:alpine
+
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY /nginx.conf /etc/nginx/conf.d/default.conf
