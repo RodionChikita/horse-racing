@@ -13,8 +13,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - backend
-      - frontend
+      - horse-races-network
 
   frontend:
     image: frontend
@@ -26,7 +25,7 @@ services:
     depends_on:
       - backend
     networks:
-      - frontend
+      - horse-races-network
 
   postgres:
     image: postgres:latest
@@ -39,11 +38,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - backend
+      - horse-races-network
 
 volumes:
   postgres_data:
     driver: local
 networks:
-  backend:
-  frontend:
+  horse-races-network:
+    driver: bridge
