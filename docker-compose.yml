@@ -12,6 +12,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: mpu
     depends_on:
       - postgres
+    networks:
+      - horse-races-network
 
   frontend:
     image: frontend
@@ -22,6 +24,8 @@ services:
       - "4200:80"
     depends_on:
       - backend
+    networks:
+      - horse-races-network
 
   postgres:
     image: postgres:latest
@@ -33,7 +37,12 @@ services:
       - "8284:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - horse-races-network
 
 volumes:
   postgres_data:
     driver: local
+networks:
+  horse-races-network:
+    driver: bridge
