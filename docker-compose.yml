@@ -13,8 +13,8 @@ services:
     depends_on:
       - postgres
     networks:
-      horse-races-network:
-        ipv4_address: 172.20.0.2
+      - backend
+      - frontend
 
   frontend:
     image: frontend
@@ -26,8 +26,7 @@ services:
     depends_on:
       - backend
     networks:
-      horse-races-network:
-        ipv4_address: 172.20.0.3
+      - frontend
 
   postgres:
     image: postgres:latest
@@ -40,16 +39,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      horse-races-network:
-        ipv4_address: 172.20.0.4
+      - backend
 
 volumes:
   postgres_data:
     driver: local
-
 networks:
-  horse-races-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16
+  backend:
+  frontend:
