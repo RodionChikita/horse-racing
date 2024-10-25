@@ -14,7 +14,7 @@
 #    path: /swagger
 
 spring:
-  port: 80
+  port: 8080
   flyway:
     enabled: true
     locations: "classpath:db/migration"
