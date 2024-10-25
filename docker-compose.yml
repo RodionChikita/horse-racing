@@ -11,7 +11,7 @@ services:
       SPRING_DATASOURCE_USERNAME: mpu
       SPRING_DATASOURCE_PASSWORD: mpu
     depends_on:
-      - postgres
+      - postgres  # ожидание старта БД
     networks:
       - horse-races-network
 
@@ -39,6 +39,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - horse-races-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U mpu" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 volumes:
   postgres_data:
