@@ -14,19 +14,23 @@
 #    path: /swagger
 server:
   port: 80
+
 spring:
   flyway:
     enabled: true
     locations: "classpath:db/migration"
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/races
+    url: jdbc:postgresql://postgres:5432/races
     username: mpu
     password: mpu
+
   jpa:
     generate-ddl: false
     hibernate:
       ddl-auto: none
     show-sql: true
-  logging:
-    level:
-      ROOT: ERROR
+
+logging:
+  level:
+    ROOT: ERROR

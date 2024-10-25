@@ -7,7 +7,7 @@ services:
     ports:
       - "9000:80"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/races
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/races
       SPRING_DATASOURCE_USERNAME: mpu
       SPRING_DATASOURCE_PASSWORD: mpu
     depends_on:
@@ -43,6 +43,7 @@ services:
 volumes:
   postgres_data:
     driver: local
+
 networks:
   horse-races-network:
     driver: bridge
