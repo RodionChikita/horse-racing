@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend/horse-races
     ports:
-      - "8080:8080"
+      - "9000:80"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/races
       SPRING_DATASOURCE_USERNAME: mpu

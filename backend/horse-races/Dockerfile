@@ -1,10 +1,14 @@
-# Используем обновленный образ Maven для сборки
-FROM maven:3.8.7-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+#
+# Build
+#
+FROM maven:3.6.0-jdk-17-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-# Используем Tomcat для развертывания WAR файла
-FROM tomcat:10.1-jdk17
-WORKDIR /usr/local/tomcat/webapps/
-COPY --from=build /app/target/*.war app.war
+#
+# Package stage
+#
+FROM openjdk:17-jre-slim
+COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
