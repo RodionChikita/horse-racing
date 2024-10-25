@@ -7,7 +7,7 @@ import {CreateOrUpdateJockeyDtoRq, JockeyDto} from "./jockey.models";
     providedIn: 'root'
 })
 export class JockeyService {
-    private apiUrl = '/api/v1/jockey';
+    private apiUrl = 'http://backend:8080/api/v1'
 
     constructor(private http: HttpClient) {}
 
