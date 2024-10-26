@@ -22,7 +22,7 @@ export class JockeyListComponent implements OnInit {
     });
   }
 
-  // Add a new owner
+  // Add a new jockey
   addJockey(e: any) {
     const newJockey: CreateOrUpdateJockeyDtoRq = e.data;
     this.jockeyService.insert(newJockey).subscribe(() => {
@@ -30,15 +30,15 @@ export class JockeyListComponent implements OnInit {
     });
   }
 
-  // Update an existing owner
+  // Update an existing jockey
   updateJockey(e: any) {
     const updatedJockey: CreateOrUpdateJockeyDtoRq = { ...e.oldData, ...e.newData };
-    this.jockeyService.update(updatedOwner).subscribe(() => {
+    this.jockeyService.update(updatedJockey).subscribe(() => {
       this.loadJockeys();
     });
   }
 
-  // Delete an owner by ID
+  // Delete an jockey by ID
   deleteJockey(e: any) {
     const jockeyId = e.data.id;
     this.jockeyService.deleteById(jockeyId).subscribe(() => {
