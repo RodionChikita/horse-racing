@@ -8,7 +8,7 @@ import {JockeyService} from "../jockey.service";
   styleUrls: ['./jockey-list.component.scss']
 })
 export class JockeyListComponent implements OnInit {
-  jockey: JockeyDto[] = [];
+  jockeys: JockeyDto[] = [];
 
   constructor(private jockeyService: JockeyService) {}
 
@@ -32,7 +32,7 @@ export class JockeyListComponent implements OnInit {
 
   // Update an existing owner
   updateJockey(e: any) {
-    const updatedOwner: CreateOrUpdateJockeyDtoRq = { ...e.oldData, ...e.newData };
+    const updatedJockey: CreateOrUpdateJockeyDtoRq = { ...e.oldData, ...e.newData };
     this.jockeyService.update(updatedOwner).subscribe(() => {
       this.loadJockeys();
     });
