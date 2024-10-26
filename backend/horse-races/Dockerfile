@@ -1,14 +1,12 @@
-#
-# Build stage
-#
 FROM maven:3.8.5-openjdk-17 AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+WORKDIR /home/app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-#
-# Package stage
-#
-FROM openjdk:17
-COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/demo.jar"]
+# Шаг сборки окончательного образа
+FROM openjdk:17-jdk
+WORKDIR /usr/local/lib
+COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
+
+ENTRYPOINT ["java", "-jar", "demo.jar"]
