@@ -27,7 +27,8 @@ public class JockeyServiceImpl implements JockeyService {
     @Transactional
     public JockeyDto insert(CreateOrUpdateJockeyDtoRq jockey) {
         jockey.setId(0L);
-        return MappersToDto.MAP_TO_JOCKEY_DTO_FUNCTION.apply(jockeyRepository.save(MappersToEntity.MAP_TO_JOCKEY_FUNCTION.apply(jockey)));
+        return MappersToDto.MAP_TO_JOCKEY_DTO_FUNCTION.apply(jockeyRepository
+                .save(MappersToEntity.MAP_TO_JOCKEY_FUNCTION.apply(jockey)));
     }
 
     @Override

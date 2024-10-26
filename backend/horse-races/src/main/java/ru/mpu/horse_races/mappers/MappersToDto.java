@@ -12,7 +12,6 @@ import ru.mpu.horse_races.domain.entities.Race;
 import ru.mpu.horse_races.domain.entities.RaceResult;
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class MappersToDto {
     public static final Function<Owner, OwnerDto> MAP_TO_OWNER_DTO_FUNCTION =
