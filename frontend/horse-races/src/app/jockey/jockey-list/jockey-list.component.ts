@@ -18,7 +18,7 @@ export class JockeyListComponent implements OnInit {
 
   loadJockeys() {
     this.jockeyService.findAll().subscribe(data => {
-      this.jockey = data;
+      this.jockeys = data;
     });
   }
 
