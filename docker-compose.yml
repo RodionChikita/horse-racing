@@ -1,4 +1,17 @@
 services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: races
+      POSTGRES_USER: mpu
+      POSTGRES_PASSWORD: mpu
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - horse-races-network
+
   backend:
     image: backend
     container_name: backend
@@ -16,6 +29,8 @@ services:
     command: ["java", "-jar", "your-backend-application.jar"]
     networks:
       - horse-races-network
+
+
   frontend:
     image: frontend
     container_name: frontend
@@ -28,18 +43,6 @@ services:
     networks:
       - horse-races-network
 
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: races
-      POSTGRES_USER: mpu
-      POSTGRES_PASSWORD: mpu
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - horse-races-network
 
 volumes:
   postgres_data:
