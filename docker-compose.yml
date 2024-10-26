@@ -35,7 +35,7 @@ services:
       POSTGRES_USER: mpu
       POSTGRES_PASSWORD: mpu
     ports:
-      - "8284:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
