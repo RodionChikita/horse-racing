@@ -2,6 +2,7 @@
 <dx-button class="glow-on-hover" mat-raised-button routerLink="/horse">Лошади</dx-button>
 <dx-button class="glow-on-hover" mat-raised-button routerLink="/owner">Владельцы</dx-button>
 <dx-button class="glow-on-hover" mat-raised-button routerLink="/race">Гонки</dx-button>
+
 <dx-data-grid
         [dataSource]="horses"
         [showBorders]="true"
@@ -16,26 +17,31 @@
             [allowUpdating]="true"
             [allowAdding]="true"
             [allowDeleting]="true"
-            [useIcons]="true">
-
-        <dxo-popup
-                title="Horse Info"
-                [showTitle]="true"
-                [width]="700"
-                [height]="525">
-        </dxo-popup>
+            [useIcons]="true"
+    >
+        <dxo-popup title="Horse Info" [showTitle]="true" [width]="700" [height]="525"></dxo-popup>
 
         <dxo-form>
             <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
                 <dxi-item dataField="nickname" caption="Nickname" [isRequired]="true"></dxi-item>
 
-                <dxi-item dataField="genderEnum" caption="Gender" [editorType]="'dxSelectBox'" [isRequired]="true"
-                          [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }">
-                </dxi-item>
+                <dxi-item
+                        dataField="genderEnum"
+                        caption="Gender"
+                        [editorType]="'dxSelectBox'"
+                        [isRequired]="true"
+                        [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }"
+                ></dxi-item>
 
                 <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
 
-                <dxi-item dataField="ownerId"></dxi-item>
+                <dxi-item
+                        dataField="ownerId"
+                        caption="Owner"
+                        [editorType]="'dxSelectBox'"
+                        [isRequired]="true"
+                        [editorOptions]="{ dataSource: owners, valueExpr: 'id', displayExpr: 'name' }"
+                ></dxi-item>
             </dxi-item>
         </dxo-form>
     </dxo-editing>
@@ -43,18 +49,12 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-<!--    <dxi-column dataField="owner.name" caption="Owner"></dxi-column>-->
-<!--    <dxi-column dataField="ownerId" caption="Owner" [width]="125">-->
-<!--        <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id">-->
-<!--        </dxo-lookup>-->
-<!--    </dxi-column>-->
+
     <dxi-column dataField="ownerId" caption="Owner" [width]="125">
-        <dxo-lookup
-                [dataSource]="owners"
-                displayExpr="name"
-                valueExpr="id">
-        </dxo-lookup>
+        <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
     </dxi-column>
+</dx-data-grid>
+
 
 
 </dx-data-grid>
