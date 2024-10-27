@@ -44,7 +44,7 @@
     <!-- Use a cell template to display the owner's name while retaining ownerId for operations -->
     <dxi-column dataField="ownerId" caption="Owner" [width]="150">
         <ng-template dxTemplate="cellTemplate" let-data>
-            {{ owners.find(owner => owner.id === data.value)?.name || '' }}
+            {{ owners?.find(owner => owner.id === data.value)?.name || '' }}
         </ng-template>
     </dxi-column>
 </dx-data-grid>
