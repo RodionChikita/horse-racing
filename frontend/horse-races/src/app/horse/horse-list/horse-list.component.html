@@ -4,6 +4,9 @@
             [dataSource]="horses"
             keyExpr="id"
             [showBorders]="true"
+            (onRowInserting)="onRowInserting($event)"
+            (onRowUpdating)="onRowUpdating($event)"
+            (onRowRemoving)="onRowRemoving($event)"
     >
         <dxo-paging [enabled]="false"></dxo-paging>
         <dxo-editing
@@ -21,11 +24,15 @@
             </dxo-popup>
             <dxo-form>
                 <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-                    <dxi-item dataField="nickname"></dxi-item>
-                    <dxi-item dataField="genderEnum"></dxi-item>
-                    <dxi-item dataField="age"></dxi-item>
-                    <dxi-item dataField="ownerId" editorType="dxLookup" [editorOptions]="{ dataSource: owners, displayExpr: 'name', valueExpr: 'id' }">
-                    </dxi-item>
+                    <dxi-item dataField="nickname" caption="Nickname"></dxi-item>
+                    <dxi-item dataField="genderEnum" caption="Gender"></dxi-item>
+                    <dxi-item dataField="age" caption="Age"></dxi-item>
+                    <dxi-item
+                            dataField="ownerId"
+                            caption="Owner"
+                            editorType="dxLookup"
+                            [editorOptions]="{ dataSource: owners, displayExpr: 'name', valueExpr: 'id' }"
+                    ></dxi-item>
                 </dxi-item>
             </dxo-form>
         </dxo-editing>
@@ -34,8 +41,7 @@
         <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
         <dxi-column dataField="age" caption="Age"></dxi-column>
         <dxi-column dataField="ownerId" caption="Owner" [width]="150">
-            <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id">
-            </dxo-lookup>
+            <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
         </dxi-column>
     </dx-data-grid>
 </div>

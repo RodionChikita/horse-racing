@@ -14,7 +14,9 @@ export class  HorseListComponent {
   horses: HorseDto[] = [];
   owners: OwnerDto[] = [];
 
-  constructor(private horseService: HorseService, private ownerService: OwnerService) {
+  constructor(private horseService: HorseService, private ownerService: OwnerService) {}
+
+  ngOnInit() {
     this.loadHorses();
     this.loadOwners();
   }
@@ -22,12 +24,14 @@ export class  HorseListComponent {
   loadHorses() {
     this.horseService.findAll().subscribe((data) => {
       this.horses = data;
+      console.log("Loaded horses:", this.horses);
     });
   }
 
   loadOwners() {
     this.ownerService.findAll().subscribe((data) => {
       this.owners = data;
+      console.log("Loaded owners:", this.owners);
     });
   }
 
