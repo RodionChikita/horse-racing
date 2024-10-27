@@ -39,7 +39,7 @@ public class HorseServiceImpl implements HorseService {
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
         var horseInserted = new Horse(0L, horse.getNickname(),horse.getGenderEnum(), horse.getAge(), owner);
-        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted));
+        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted.getNickname(), horseInserted.getGenderEnum().name(), horseInserted.getAge(), horseInserted.getOwner().getId()));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class HorseServiceImpl implements HorseService {
         horseUpdated.setOwner(owner);
         horseUpdated.setNickname(horse.getNickname());
         horseUpdated.setGenderEnum(horse.getGenderEnum());
-        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated));
+        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated.getNickname(), horseUpdated.getGenderEnum().name(), horseUpdated.getAge(), horseUpdated.getOwner().getId()));
     }
 
     @Override
