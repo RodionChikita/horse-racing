@@ -24,14 +24,14 @@ export class  HorseListComponent {
   loadHorses() {
     this.horseService.findAll().subscribe((data) => {
       this.horses = data;
-      console.log("Loaded horses:", this.horses);
+      console.log('Loaded horses:', this.horses);
     });
   }
 
   loadOwners() {
     this.ownerService.findAll().subscribe((data) => {
       this.owners = data;
-      console.log("Loaded owners:", this.owners);
+      console.log('Loaded owners:', this.owners);
     });
   }
 
@@ -40,7 +40,7 @@ export class  HorseListComponent {
       nickname: e.data.nickname,
       genderEnum: e.data.genderEnum,
       age: e.data.age,
-      ownerId: e.data.ownerId,
+      ownerId: e.data.ownerId
     };
 
     this.horseService.insert(newHorse).subscribe(() => {
@@ -54,7 +54,7 @@ export class  HorseListComponent {
       nickname: e.newData.nickname || e.oldData.nickname,
       genderEnum: e.newData.genderEnum || e.oldData.genderEnum,
       age: e.newData.age || e.oldData.age,
-      ownerId: e.newData.ownerId || e.oldData.ownerId,
+      ownerId: e.newData.ownerId || e.oldData.ownerId
     };
 
     this.horseService.update(updatedHorse).subscribe(() => {

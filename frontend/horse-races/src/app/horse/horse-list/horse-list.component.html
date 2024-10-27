@@ -1,6 +1,5 @@
 <div id="data-grid-demo">
     <dx-data-grid
-            id="gridContainer"
             [dataSource]="horses"
             keyExpr="id"
             [showBorders]="true"
@@ -20,8 +19,7 @@
                     [showTitle]="true"
                     [width]="700"
                     [height]="400"
-            >
-            </dxo-popup>
+            ></dxo-popup>
             <dxo-form>
                 <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
                     <dxi-item dataField="nickname" caption="Nickname"></dxi-item>
@@ -31,7 +29,11 @@
                             dataField="ownerId"
                             caption="Owner"
                             editorType="dxLookup"
-                            [editorOptions]="{ dataSource: owners, displayExpr: 'name', valueExpr: 'id' }"
+                            [editorOptions]="{
+              dataSource: owners,
+              displayExpr: 'name',
+              valueExpr: 'id'
+            }"
                     ></dxi-item>
                 </dxi-item>
             </dxo-form>
@@ -41,7 +43,11 @@
         <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
         <dxi-column dataField="age" caption="Age"></dxi-column>
         <dxi-column dataField="ownerId" caption="Owner" [width]="150">
-            <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
+            <dxo-lookup
+                    [dataSource]="owners"
+                    displayExpr="name"
+                    valueExpr="id"
+            ></dxo-lookup>
         </dxi-column>
     </dx-data-grid>
 </div>
