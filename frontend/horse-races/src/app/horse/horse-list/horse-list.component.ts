@@ -21,16 +21,16 @@ export class HorseListComponent implements OnInit {
         this.loadOwners();
     }
 
-    loadHorses() {
-        this.horseService.findAll().subscribe((data) => {
-            this.horses = data;
+    loadOwners() {
+        this.ownerService.findAll().subscribe((data: OwnerDto[]) => {
+            this.owners = data;
+            console.log('Loaded owners:', this.owners); // Лог для проверки данных
         });
     }
 
-    loadOwners() {
-        this.ownerService.findAll().subscribe((data) => {
-            this.owners = data;
-            console.log('Owners Loaded: ', this.owners);
+    loadHorses() {
+        this.horseService.findAll().subscribe((data) => {
+            this.horses = data;
         });
     }
 
