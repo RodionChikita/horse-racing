@@ -27,7 +27,13 @@ export class HorseListComponent implements OnInit {
 
   loadHorses(): void {
     this.horseService.findAll().subscribe(
-      (data: HorseDto[]) => this.horses = data,
+      (data: HorseDto[]) => {
+        // Привязываем существующих владельцев к каждому коню
+        data.forEach(horse => {
+          horse.owner = this.owners.find(o => o.id === horse.owner.id) || horse.owner;
+        });
+        this.horses = data;
+      },
       (error: any) => console.error('Error loading horses', error)
     );
   }
@@ -40,11 +46,6 @@ export class HorseListComponent implements OnInit {
         return of([]);
       })
     );
-  }
-
-  getOwnerName(ownerId: number): string {
-    const owner = this.owners.find(o => o.id === ownerId);
-    return owner ? owner.name : 'Unknown';
   }
 
   addHorse(event: any): void {
