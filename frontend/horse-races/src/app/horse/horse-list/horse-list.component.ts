@@ -38,12 +38,12 @@ export class HorseListComponent implements OnInit {
 addHorse(e: any) {
     const newHorse: CreateOrUpdateHorseDtoRq = {
         ...e.data,
-        ownerId: e.data.ownerId // Явно указываем ownerId из данных
+        ownerId: e.data.ownerId
     };
-    console.log('Adding horse with data:', newHorse);
+    console.log('New Horse:', newHorse); // Лог для проверки
     e.promise = this.horseService.insert(newHorse).toPromise().then(
         () => {
-            this.loadHorses(); // Reload data once insertion is successful
+            this.loadHorses();
         },
         (error) => {
             console.error('Failed to add horse', error);
@@ -56,8 +56,9 @@ updateHorse(e: any) {
     const updatedHorse: CreateOrUpdateHorseDtoRq = {
         ...e.oldData,
         ...e.newData,
-        ownerId: e.newData.ownerId || e.oldData.ownerId // Аккуратно переносим ownerId
+        ownerId: e.newData.ownerId || e.oldData.ownerId
     };
+    console.log('Updated Horse:', updatedHorse); // Лог для проверки
     e.promise = this.horseService.update(updatedHorse).toPromise().then(
         () => {
             this.loadHorses();
