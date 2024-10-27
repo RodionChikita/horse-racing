@@ -1,4 +1,5 @@
 create type gender AS enum ('MALE', 'FEMALE');
+ALTER TABLE horses ALTER COLUMN gender TYPE gender USING gender::gender;
 
 create table
 owners(
