@@ -35,33 +35,39 @@ export class HorseListComponent implements OnInit {
     }
 
     // Add a new horse
-    addHorse(e: any) {
-        const newHorse: CreateOrUpdateHorseDtoRq = e.data;
-        console.log('Adding horse with data:', newHorse);
-        e.promise = this.horseService.insert(newHorse).toPromise().then(
-            () => {
-                this.loadHorses(); // Reload data once insertion is successful
-            },
-            (error) => {
-                console.error('Failed to add horse', error);
-                e.cancel = true;
-            }
-        );
-    }
+addHorse(e: any) {
+    const newHorse: CreateOrUpdateHorseDtoRq = {
+        ...e.data,
+        ownerId: e.data.ownerId // Явно указываем ownerId из данных
+    };
+    console.log('Adding horse with data:', newHorse);
+    e.promise = this.horseService.insert(newHorse).toPromise().then(
+        () => {
+            this.loadHorses(); // Reload data once insertion is successful
+        },
+        (error) => {
+            console.error('Failed to add horse', error);
+            e.cancel = true;
+        }
+    );
+}
 
-    // Update an existing horse
-    updateHorse(e: any) {
-        const updatedHorse: CreateOrUpdateHorseDtoRq = { ...e.oldData, ...e.newData };
-        e.promise = this.horseService.update(updatedHorse).toPromise().then(
-            () => {
-                this.loadHorses();
-            },
-            (error) => {
-                console.error('Failed to update horse', error);
-                e.cancel = true;
-            }
-        );
-    }
+updateHorse(e: any) {
+    const updatedHorse: CreateOrUpdateHorseDtoRq = {
+        ...e.oldData,
+        ...e.newData,
+        ownerId: e.newData.ownerId || e.oldData.ownerId // Аккуратно переносим ownerId
+    };
+    e.promise = this.horseService.update(updatedHorse).toPromise().then(
+        () => {
+            this.loadHorses();
+        },
+        (error) => {
+            console.error('Failed to update horse', error);
+            e.cancel = true;
+        }
+    );
+}
 
     // Delete a horse by ID
     deleteHorse(e: any) {
