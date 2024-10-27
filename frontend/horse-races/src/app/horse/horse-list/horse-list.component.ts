@@ -3,7 +3,7 @@ import { HorseService } from '../horse.service';
 import { OwnerService } from '../../owner/owner.service';
 import { OwnerDto } from '../../owner/owner.models';
 import { HorseDto, CreateOrUpdateHorseDtoRq } from '../horse.models';
-import { Observable, of } from 'rxjs'; // Добавьте импорт 'of'
+import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Component({
@@ -37,14 +37,9 @@ export class HorseListComponent implements OnInit {
       tap((owners) => this.owners = owners),
       catchError((error) => {
         console.error('Error loading owners', error);
-        return of([]); // Убедитесь, что 'of' импортирован
+        return of([]);
       })
     );
-  }
-
-  getOwnerName(ownerId: number): string {
-    const owner = this.owners.find(o => o.id === ownerId);
-    return owner ? owner.name : 'Unknown';
   }
 
   addHorse(event: any): void {
@@ -58,9 +53,7 @@ export class HorseListComponent implements OnInit {
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
         const owner = this.owners.find(o => o.id === newHorse.ownerId);
-        if (owner) {
-          createdHorse.owner = owner;
-        }
+        createdHorse.owner = owner!;
         this.horses.push(createdHorse);
       },
       (error: any) => console.error('Error adding horse', error)
