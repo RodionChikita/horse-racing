@@ -55,6 +55,8 @@ export class HorseListComponent implements OnInit {
       ownerId: event.data.ownerId,
     };
 
+    console.log('Adding horse with ownerId:', newHorse.ownerId); // Логирование для проверки
+
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
         const owner = this.owners.find(o => o.id === event.data.ownerId);
@@ -75,6 +77,9 @@ export class HorseListComponent implements OnInit {
       age: event.newData.age || event.oldData.age,
       ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
+
+    console.log('Updating horse with ownerId:', updatedHorse.ownerId); // Логирование для проверки
+
     this.horseService.update(updatedHorse).subscribe(
       () => {
         const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);

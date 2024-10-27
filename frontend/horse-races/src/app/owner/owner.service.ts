@@ -27,4 +27,3 @@ export class OwnerService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
-

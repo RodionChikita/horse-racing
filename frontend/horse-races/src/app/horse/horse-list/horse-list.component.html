@@ -27,6 +27,7 @@
                         [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }"
                 ></dxi-item>
                 <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
+                <!-- Правильное использование ownerId -->
                 <dxi-item
                         dataField="ownerId"
                         caption="Owner"
@@ -41,9 +42,10 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <dxi-column dataField="owner.name" caption="Owner Name" [width]="150">
+    <!-- Используем getOwnerName для отображения имени -->
+    <dxi-column [caption]="'Owner Name'" [width]="150">
         <ng-template dxTemplate="cellTemplate" let-data>
-            {{ getOwnerName(data.value.id) }}
+            {{ getOwnerName(data.data.owner.id) }}
         </ng-template>
     </dxi-column>
 </dx-data-grid>
