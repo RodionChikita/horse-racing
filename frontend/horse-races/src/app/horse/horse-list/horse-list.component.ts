@@ -24,14 +24,14 @@ export class HorseListComponent implements OnInit {
   }
 
   loadHorses(): void {
-    this.horseService.getHorses().subscribe(
+    this.horseService.findAll.subscribe(
       (data) => this.horses = data,
       (error) => console.error('Error loading horses', error)
     );
   }
 
   loadOwners(): void {
-    this.ownerService.getOwners().subscribe(
+    this.ownerService.findAll.subscribe(
       (data) => this.owners = data,
       (error) => console.error('Error loading owners', error)
     );
