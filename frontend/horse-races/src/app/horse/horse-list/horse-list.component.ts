@@ -34,43 +34,47 @@ export class HorseListComponent implements OnInit {
         });
     }
 
-    addHorse(e: any) {
-        const newHorse: CreateOrUpdateHorseDtoRq = { ...e.data, ownerId: e.data.ownerId };
-        console.log('Adding horse with data:', newHorse);
-        if (newHorse.ownerId == null) {
-            console.error('Owner ID is undefined, cannot add horse');
-            e.cancel = true;
-            return;
-        }
-        e.promise = this.horseService.insert(newHorse).toPromise().then(
-            () => {
-                this.loadHorses();
-            },
-            (error) => {
-                console.error('Failed to add horse', error);
-                e.cancel = true;
-            }
-        );
+addHorse(e: any) {
+    const newHorse: CreateOrUpdateHorseDtoRq = { ...e.data, ownerId: e.data.ownerId };
+    if (!this.validateHorse(newHorse)) {
+        console.error('Validation failed');
+        e.cancel = true;
+        return;
     }
 
-    updateHorse(e: any) {
-        const updatedHorse: CreateOrUpdateHorseDtoRq = { ...e.oldData, ...e.newData, ownerId: e.newData.ownerId || e.oldData.ownerId };
-        console.log('Updating horse with data:', updatedHorse);
-        if (updatedHorse.ownerId == null) {
-            console.error('Owner ID is undefined, cannot update horse');
+    e.promise = this.horseService.insert(newHorse).toPromise().then(
+        () => {
+            this.loadHorses();
+        },
+        (error: any) => {
+            console.error('Failed to add horse', error);
             e.cancel = true;
-            return;
         }
-        e.promise = this.horseService.update(updatedHorse).toPromise().then(
-            () => {
-                this.loadHorses();
-            },
-            (error) => {
-                console.error('Failed to update horse', error);
-                e.cancel = true;
-            }
-        );
+    );
+}
+
+updateHorse(e: any) {
+    const updatedHorse: CreateOrUpdateHorseDtoRq = { ...e.oldData, ...e.newData, ownerId: e.newData.ownerId || e.oldData.ownerId };
+    if (!this.validateHorse(updatedHorse)) {
+        console.error('Validation failed');
+        e.cancel = true;
+        return;
     }
+
+    e.promise = this.horseService.update(updatedHorse).toPromise().then(
+        () => {
+            this.loadHorses();
+        },
+        (error: any) => {
+            console.error('Failed to update horse', error);
+            e.cancel = true;
+        }
+    );
+}
+
+private validateHorse(horse: CreateOrUpdateHorseDtoRq): boolean {
+    return horse.nickname && horse.genderEnum && horse.age != null && horse.ownerId != null;
+}
 
     deleteHorse(e: any) {
         const horseId = e.data.id;
