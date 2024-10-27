@@ -7,7 +7,6 @@
         (onRowUpdating)="updateHorse($event)"
         (onRowRemoving)="deleteHorse($event)"
 >
-    <!-- Опции редактирования -->
     <dxo-editing
             mode="popup"
             [allowUpdating]="true"
@@ -42,8 +41,9 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <!-- Здесь мы указываем 'owner.name', чтобы отобразить имя владельца -->
-    <dxi-column dataField="owner.name" caption="Owner Name"></dxi-column>
+    <dxi-column dataField="ownerId" caption="Owner Name" [width]="150">
+        <ng-template dxTemplate="cellTemplate" let-data>
+            {{ getOwnerName(data.value) }}
+        </ng-template>
+    </dxi-column>
 </dx-data-grid>
-
-
