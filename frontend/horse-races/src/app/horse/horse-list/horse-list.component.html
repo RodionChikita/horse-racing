@@ -35,8 +35,18 @@
 
                 <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
 
-                <dxi-item dataField="ownerId" caption="Owner" [editorType]="'dxSelectBox'" [isRequired]="true"
-                          [editorOptions]="{ dataSource: owners, valueExpr: 'id', displayExpr: 'name' }">
+                <dxi-item
+                        dataField="ownerId"
+                        caption="Owner"
+                        [editorType]="'dxSelectBox'"
+                        [isRequired]="true"
+                        [editorOptions]="{
+        dataSource: owners,
+        valueExpr: 'id',
+        displayExpr: 'name',
+        value: selectedOwnerId  // Проверьте, что значение привязано
+    }">
+                </dxi-item>
                 </dxi-item>
             </dxi-item>
         </dxo-form>
