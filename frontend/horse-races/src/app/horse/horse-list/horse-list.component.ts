@@ -1,3 +1,14 @@
+import { Component, OnInit } from '@angular/core';
+import { HorseService } from '../horse.service';
+import {OwnerDto} from "../../owner/owner.models";
+import {CreateOrUpdateHorseDtoRq, HorseDto} from "../horse.models";
+import {OwnerService} from "../../owner/owner.service";
+
+@Component({
+    selector: 'app-horse-list',
+    templateUrl: './horse-list.component.html',
+    styleUrls: ['./horse-list.component.scss']
+})
 export class HorseListComponent implements OnInit {
     horses: HorseDto[] = [];
     owners: OwnerDto[] = [];
@@ -74,4 +85,3 @@ export class HorseListComponent implements OnInit {
         );
     }
 }
-
