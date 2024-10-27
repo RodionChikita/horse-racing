@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {CreateOrUpdateHorseDtoRq, HorseDto} from "./horse.models";
-import {RaceResultDto} from "../race-result/race-result.model";
+import { CreateOrUpdateHorseDtoRq, HorseDto } from "./horse.models";
+import { RaceResultDto } from "../race-result/race-result.model";
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +16,12 @@ export class HorseService {
         return this.http.get<HorseDto[]>(`${this.baseUrl}`);
     }
 
-    insert(horse: CreateOrUpdateHorseDtoRq): Observable<CreateOrUpdateHorseDtoRq> {
-        return this.http.post<CreateOrUpdateHorseDtoRq>(`${this.baseUrl}`, horse);
+    insert(horse: CreateOrUpdateHorseDtoRq): Observable<HorseDto> {
+        return this.http.post<HorseDto>(`${this.baseUrl}`, horse);
     }
 
-    update(horse: CreateOrUpdateHorseDtoRq): Observable<CreateOrUpdateHorseDtoRq> {
-        return this.http.put<CreateOrUpdateHorseDtoRq>(`${this.baseUrl}`, horse);
+    update(horse: CreateOrUpdateHorseDtoRq): Observable<HorseDto> {
+        return this.http.put<HorseDto>(`${this.baseUrl}/${horse.id}`, horse);
     }
 
     deleteById(id: number): Observable<void> {
@@ -32,3 +32,4 @@ export class HorseService {
         return this.http.get<RaceResultDto[]>(`${this.baseUrl}/${id}/race_results`);
     }
 }
+

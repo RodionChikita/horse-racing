@@ -41,7 +41,7 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <dxi-column dataField="ownerId" caption="Owner Name" [width]="150">
+    <dxi-column dataField="owner.id" caption="Owner Name" [width]="150">
         <ng-template dxTemplate="cellTemplate" let-data>
             {{ getOwnerName(data.value) }}
         </ng-template>

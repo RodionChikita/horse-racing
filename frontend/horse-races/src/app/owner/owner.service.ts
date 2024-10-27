@@ -20,10 +20,11 @@ export class OwnerService {
   }
 
   update(owner: CreateOrUpdateOwnerDtoRq): Observable<OwnerDto> {
-    return this.http.put<OwnerDto>(this.apiUrl, owner);
+    return this.http.put<OwnerDto>(`${this.apiUrl}/${owner.id}`, owner);
   }
 
   deleteById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
+

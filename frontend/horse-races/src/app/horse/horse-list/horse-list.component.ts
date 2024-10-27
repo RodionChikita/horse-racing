@@ -3,6 +3,8 @@ import { HorseService } from '../horse.service';
 import { OwnerDto } from "../../owner/owner.models";
 import { CreateOrUpdateHorseDtoRq, HorseDto } from "../horse.models";
 import { OwnerService } from "../../owner/owner.service";
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-horse-list',
@@ -18,28 +20,32 @@ export class HorseListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadHorses();
-    this.loadOwners();
+    this.loadOwners().subscribe(() => {
+      this.loadHorses();
+    });
   }
 
   loadHorses(): void {
-    this.horseService.findAll().subscribe( // Вызов как функции
+    this.horseService.findAll().subscribe(
       (data: HorseDto[]) => this.horses = data,
       (error: any) => console.error('Error loading horses', error)
     );
   }
 
-  loadOwners(): void {
-    this.ownerService.findAll().subscribe( // Вызов как функции
-      (data: OwnerDto[]) => this.owners = data,
-      (error: any) => console.error('Error loading owners', error)
+  loadOwners(): Observable<OwnerDto[]> {
+    return this.ownerService.findAll().pipe(
+      tap((owners) => this.owners = owners),
+      catchError((error) => {
+        console.error('Error loading owners', error);
+        return of([]);
+      })
     );
   }
 
-getOwnerName(ownerId: number): string {
-  const owner = this.owners.find(o => o.id === ownerId);
-  return owner ? owner.name : 'Unknown'; // Если владелец не найден, вернуть 'Unknown'
-}
+  getOwnerName(ownerId: number): string {
+    const owner = this.owners.find(o => o.id === ownerId);
+    return owner ? owner.name : 'Unknown';
+  }
 
   addHorse(event: any): void {
     const newHorse: CreateOrUpdateHorseDtoRq = {
@@ -50,16 +56,12 @@ getOwnerName(ownerId: number): string {
     };
 
     this.horseService.insert(newHorse).subscribe(
-      (response: any) => {
-        const owner = this.owners.find(o => o.id === newHorse.ownerId);
-        const transformedHorse: HorseDto = {
-          id: response.id,
-          nickname: response.nickname,
-          genderEnum: response.genderEnum,
-          age: response.age,
+      (createdHorse: HorseDto) => {
+        const owner = this.owners.find(o => o.id === createdHorse.ownerId);
+        this.horses.push({
+          ...createdHorse,
           owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
-        };
-        this.horses.push(transformedHorse);
+        });
       },
       (error: any) => console.error('Error adding horse', error)
     );
@@ -73,7 +75,7 @@ getOwnerName(ownerId: number): string {
       age: event.newData.age || event.oldData.age,
       ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
-    this.horseService.update(updatedHorse).subscribe( // Измените метод на update
+    this.horseService.update(updatedHorse).subscribe(
       () => {},
       (error: any) => console.error('Error updating horse', error)
     );
