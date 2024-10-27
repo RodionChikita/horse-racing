@@ -34,6 +34,7 @@ public class HorseServiceImpl implements HorseService {
     @Transactional
     public HorseDto insert(CreateOrUpdateHorseDtoRq horse) {
         logger.info("Inserting horse with data: {}", horse);
+        logger.info("Inserting horse with data: {}", horse.getOwnerId());
         horse.setId(0L);
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
