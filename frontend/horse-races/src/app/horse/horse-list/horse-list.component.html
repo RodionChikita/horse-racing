@@ -1,49 +1,44 @@
-<dx-data-grid
-        [dataSource]="horses"
-        [showBorders]="true"
-        [allowColumnResizing]="true"
-        [columnAutoWidth]="true"
-        (onRowInserting)="addHorse($event)"
-        (onRowUpdating)="updateHorse($event)"
-        (onRowRemoving)="deleteHorse($event)"
->
-    <dxo-editing
-            mode="popup"
-            [allowUpdating]="true"
-            [allowAdding]="true"
-            [allowDeleting]="true"
-            [useIcons]="true"
+<div id="data-grid-demo">
+    <dx-data-grid
+            id="gridContainer"
+            [dataSource]="horses"
+            keyExpr="id"
+            [showBorders]="true"
     >
-        <dxo-popup title="Horse Info" [showTitle]="true" [width]="700" [height]="525"></dxo-popup>
+        <dxo-paging [enabled]="false"></dxo-paging>
+        <dxo-editing
+                mode="popup"
+                [allowUpdating]="true"
+                [allowAdding]="true"
+                [allowDeleting]="true"
+                (onRowInserted)="insertHorse($event.data)"
+                (onRowUpdated)="updateHorse($event.data)"
+                (onRowRemoved)="deleteHorse($event.data.id)"
+        >
+            <dxo-popup
+                    title="Horse Info"
+                    [showTitle]="true"
+                    [width]="700"
+                    [height]="525"
+            >
+            </dxo-popup>
+            <dxo-form>
+                <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+                    <dxi-item dataField="nickname"></dxi-item>
+                    <dxi-item dataField="genderEnum" editorType="dxSelectBox" [editorOptions]="{ items: ['MALE', 'FEMALE'], value: '' }"></dxi-item>
+                    <dxi-item dataField="age"></dxi-item>
+                    <dxi-item dataField="ownerId" editorType="dxLookup">
+                        <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
+                    </dxi-item>
+                </dxi-item>
+            </dxo-form>
+        </dxo-editing>
 
-        <dxo-form>
-            <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-                <dxi-item dataField="nickname" caption="Nickname" [isRequired]="true"></dxi-item>
-                <dxi-item
-                        dataField="genderEnum"
-                        caption="Gender"
-                        [editorType]="'dxSelectBox'"
-                        [isRequired]="true"
-                        [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }"
-                ></dxi-item>
-                <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
-                <dxi-item
-                        dataField="ownerId"
-                        caption="Owner"
-                        [editorType]="'dxSelectBox'"
-                        [isRequired]="true"
-                        [editorOptions]="{ dataSource: owners, valueExpr: 'id', displayExpr: 'name' }"
-                ></dxi-item>
-            </dxi-item>
-        </dxo-form>
-    </dxo-editing>
-
-    <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
-    <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
-    <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <dxi-column dataField="owner.id" caption="Owner">
-        <ng-template dxTemplate="cellTemplate" let-data>
-            {{ getOwnerName(data.data.ownerId) }}
-        </ng-template>
-    </dxi-column>
-</dx-data-grid>
+        <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
+        <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
+        <dxi-column dataField="age" caption="Age"></dxi-column>
+        <dxi-column dataField="ownerId" caption="Owner">
+            <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
+        </dxi-column>
+    </dx-data-grid>
+</div>

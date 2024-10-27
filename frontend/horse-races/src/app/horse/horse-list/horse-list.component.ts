@@ -10,94 +10,32 @@ import { tap, catchError } from 'rxjs/operators';
   selector: 'app-horse-list',
   templateUrl: './horse-list.component.html',
 })
-export class HorseListComponent implements OnInit {
+export class AppComponent {
   horses: HorseDto[] = [];
   owners: OwnerDto[] = [];
 
-  constructor(
-    private horseService: HorseService,
-    private ownerService: OwnerService
-  ) {}
-
-  ngOnInit(): void {
-    this.loadOwners().subscribe(() => {
-      this.loadHorses();
-    });
+  constructor(private horseService: HorseService, private ownerService: OwnerService) {
+    this.loadHorses();
+    this.loadOwners();
   }
 
-  loadHorses(): void {
-    this.horseService.findAll().subscribe(
-      (data: HorseDto[]) => this.horses = data,
-      (error: any) => console.error('Error loading horses', error)
-    );
+  loadHorses() {
+    this.horseService.findAll().subscribe(data => this.horses = data);
   }
 
-  loadOwners(): Observable<OwnerDto[]> {
-    return this.ownerService.findAll().pipe(
-      tap((owners) => this.owners = owners),
-      catchError((error) => {
-        console.error('Error loading owners', error);
-        return of([]);
-      })
-    );
+  loadOwners() {
+    this.ownerService.findAll().subscribe(data => this.owners = data);
   }
 
-  getOwnerName(ownerId: number): string {
-    const owner = this.owners.find(o => o.id === ownerId);
-    return owner ? owner.name : 'Unknown';
+  insertHorse(horse: HorseDto) {
+    this.horseService.insert(horse).subscribe(() => this.loadHorses());
   }
 
-  addHorse(event: any): void {
-    const newHorse: CreateOrUpdateHorseDtoRq = {
-      nickname: event.data.nickname,
-      genderEnum: event.data.genderEnum,
-      age: event.data.age,
-      ownerId: event.data.ownerId,
-    };
-
-    this.horseService.insert(newHorse).subscribe(
-      (createdHorse: HorseDto) => {
-        const owner = this.owners.find(o => o.id === newHorse.ownerId);
-        if (owner) {
-          createdHorse.owner = owner;
-        }
-        this.horses.push(createdHorse);
-      },
-      (error: any) => console.error('Error adding horse', error)
-    );
+  updateHorse(horse: HorseDto) {
+    this.horseService.update(horse).subscribe(() => this.loadHorses());
   }
 
-  updateHorse(event: any): void {
-    const updatedHorse: CreateOrUpdateHorseDtoRq = {
-      id: event.oldData.id,
-      nickname: event.newData.nickname || event.oldData.nickname,
-      genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
-      age: event.newData.age || event.oldData.age,
-      ownerId: event.newData.ownerId || event.oldData.ownerId,
-    };
-
-    this.horseService.update(updatedHorse).subscribe(
-      () => {
-        const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
-        const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
-        if (updatedIndex > -1 && owner) {
-          this.horses[updatedIndex].owner = owner;
-        }
-      },
-      (error: any) => console.error('Error updating horse', error)
-    );
-  }
-
-  deleteHorse(event: any): void {
-    const horseId = event.data.id;
-    event.promise = this.horseService.deleteById(horseId).toPromise().then(
-      () => {
-        this.horses = this.horses.filter(h => h.id !== horseId);
-      },
-      (error: any) => {
-        console.error('Error deleting horse', error);
-        event.cancel = true;
-      }
-    );
+  deleteHorse(id: number) {
+    this.horseService.deleteById(id).subscribe(() => this.loadHorses());
   }
 }
