@@ -57,10 +57,10 @@ export class HorseListComponent implements OnInit {
 
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
-        const owner = this.owners.find(o => o.id === newHorse.ownerId);
+        const owner = this.owners.find(o => o.id === event.data.ownerId);
         this.horses.push({
           ...createdHorse,
-          owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
+          owner: owner ?? { id: event.data.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
         });
       },
       (error: any) => console.error('Error adding horse', error)
@@ -76,7 +76,12 @@ export class HorseListComponent implements OnInit {
       ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
     this.horseService.update(updatedHorse).subscribe(
-      () => {},
+      () => {
+        const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
+        if (updatedIndex > -1) {
+          this.horses[updatedIndex].owner = this.owners.find(o => o.id === updatedHorse.ownerId) ?? this.horses[updatedIndex].owner;
+        }
+      },
       (error: any) => console.error('Error updating horse', error)
     );
   }
