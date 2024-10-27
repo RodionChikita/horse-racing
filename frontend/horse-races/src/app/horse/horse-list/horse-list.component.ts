@@ -6,32 +6,36 @@ import { CreateOrUpdateHorseDtoRq, HorseDto } from "../horse.models";
 import { OwnerService } from "../../owner/owner.service";
 
 @Component({
-    selector: 'app-horse-list',
-    templateUrl: './horse-list.component.html',
-    styleUrls: ['./horse-list.component.scss']
+  selector: 'app-horse-list',
+  templateUrl: './horse-list.component.html',
 })
-export class HorseListComponent {
-  horses: HorseDto[] = [];  // Загрузите лошадей из сервиса
-  owners: OwnerDto[] = [];  // Загрузите владельцев из сервиса
+export class HorseListComponent implements OnInit {
+  horses: HorseDto[] = [];
+  owners: OwnerDto[] = [];
 
-    constructor(private horseService: HorseService, private ownerService: OwnerService) {}
+  constructor(
+    private horseService: HorseService,
+    private ownerService: OwnerService
+  ) {}
 
-    ngOnInit() {
-        this.loadHorses();
-        this.loadOwners();
-    }
+  ngOnInit(): void {
+    this.loadHorses();
+    this.loadOwners();
+  }
 
-    loadHorses() {
-        this.horseService.findAll().subscribe((data) => {
-            this.horses = data;
-        });
-    }
+  loadHorses(): void {
+    this.horseService.getHorses().subscribe(
+      (data) => this.horses = data,
+      (error) => console.error('Error loading horses', error)
+    );
+  }
 
-    loadOwners() {
-        this.ownerService.findAll().subscribe((data) => {
-            this.owners = data;
-        });
-    }
+  loadOwners(): void {
+    this.ownerService.getOwners().subscribe(
+      (data) => this.owners = data,
+      (error) => console.error('Error loading owners', error)
+    );
+  }
 
   getOwnerName(ownerId: number): string {
     const owner = this.owners.find(o => o.id === ownerId);
@@ -39,14 +43,16 @@ export class HorseListComponent {
   }
 
   addHorse(event: any) {
-    // Используйте event.data для сохранения, идите через service
     const newHorse: CreateOrUpdateHorseDtoRq = {
       nickname: event.data.nickname,
       genderEnum: event.data.genderEnum,
       age: event.data.age,
-      ownerId: event.data.ownerId, // Передаем ownerId
+      ownerId: event.data.ownerId,
     };
-    // Обработка сохранения newHorse через сервис
+    this.horseService.createHorse(newHorse).subscribe(
+      (horse) => this.horses.push(horse),
+      (error) => console.error('Error adding horse', error)
+    );
   }
 
   updateHorse(event: any) {
@@ -55,42 +61,26 @@ export class HorseListComponent {
       nickname: event.newData.nickname || event.oldData.nickname,
       genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
       age: event.newData.age || event.oldData.age,
-      ownerId: event.newData.ownerId || event.oldData.ownerId, // Передаем ownerId
+      ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
+    this.horseService.updateHorse(updatedHorse).subscribe(
+      () => {},
+      (error) => console.error('Error updating horse', error)
+    );
+  }
 
-
-//
-//     addHorse(e: any) {
-//         const newHorse: CreateOrUpdateHorseDtoRq = e.data;
-//         console.log('Inserting horse data:', newHorse);
-//         e.promise = this.horseService.insert(newHorse).toPromise().then(
-//             () => this.loadHorses(),
-//             (error) => {
-//                 console.error('Failed to add horse', error);
-//                 e.cancel = true;
-//             }
-//         );
-//     }
-//
-//     updateHorse(e: any) {
-//         const updatedHorse: CreateOrUpdateHorseDtoRq = { ...e.oldData, ...e.newData };
-//         e.promise = this.horseService.update(updatedHorse).toPromise().then(
-//             () => this.loadHorses(),
-//             (error) => {
-//                 console.error('Failed to update horse', error);
-//                 e.cancel = true;
-//             }
-//         );
-//     }
-
-    deleteHorse(e: any) {
-        const horseId = e.data.id;
-        e.promise = this.horseService.deleteById(horseId).toPromise().then(
-            () => this.loadHorses(),
-            (error) => {
-                console.error('Failed to delete horse', error);
-                e.cancel = true;
-            }
-        );
-    }
+  deleteHorse(event: any) {
+    const horseId = event.data.id;
+    event.promise = this.horseService.deleteById(horseId).toPromise().then(
+      () => {
+        // Удаление прошло успешно, обновите список лошадей
+        this.horses = this.horses.filter(h => h.id !== horseId);
+      },
+      (error) => {
+        console.error('Error deleting horse', error);
+        event.cancel = true;
+      }
+    );
+  }
 }
+
