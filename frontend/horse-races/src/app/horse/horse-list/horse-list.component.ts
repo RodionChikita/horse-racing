@@ -3,7 +3,7 @@ import { HorseService } from '../horse.service';
 import { OwnerDto } from "../../owner/owner.models";
 import { CreateOrUpdateHorseDtoRq, HorseDto } from "../horse.models";
 import { OwnerService } from "../../owner/owner.service";
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Component({
@@ -58,10 +58,10 @@ export class HorseListComponent implements OnInit {
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
         const owner = this.owners.find(o => o.id === newHorse.ownerId);
-        this.horses.push({
-          ...createdHorse,
-          owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
-        });
+        if (owner) {
+          createdHorse.owner = owner;
+        }
+        this.horses.push(createdHorse);
       },
       (error: any) => console.error('Error adding horse', error)
     );
@@ -79,8 +79,9 @@ export class HorseListComponent implements OnInit {
     this.horseService.update(updatedHorse).subscribe(
       () => {
         const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
-        if (updatedIndex > -1) {
-          this.horses[updatedIndex].owner = this.owners.find(o => o.id === updatedHorse.ownerId) ?? this.horses[updatedIndex].owner;
+        const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
+        if (updatedIndex > -1 && owner) {
+          this.horses[updatedIndex].owner = owner;
         }
       },
       (error: any) => console.error('Error updating horse', error)
