@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HorseService } from '../horse.service';
 import {OwnerDto} from "../../owner/owner.models";
-import {CreateOrUpdateHorseDtoRq, HorseDto} from "../horse.models";
+import {CreateOrUpdateHorseDtoRq, HorseDto, GenderEnum} from "../horse.models";
 import {OwnerService} from "../../owner/owner.service";
 
 @Component({
