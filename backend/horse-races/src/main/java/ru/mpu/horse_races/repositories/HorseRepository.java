@@ -2,6 +2,7 @@ package ru.mpu.horse_races.repositories;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,7 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
     @EntityGraph("horse-owner-entity-graph")
     List<Horse> findAll();
 
+    @Modifying
     @Query(value = "INSERT INTO horses (nickname, gender, age, owner_id) VALUES (?, ?::gender, ?, ?)", nativeQuery = true)
     Horse save(String nickname,
                String gender,
