@@ -10,7 +10,7 @@ import { tap, catchError } from 'rxjs/operators';
   selector: 'app-horse-list',
   templateUrl: './horse-list.component.html',
 })
-export class AppComponent {
+export class  HorseListComponent {
   horses: HorseDto[] = [];
   owners: OwnerDto[] = [];
 
