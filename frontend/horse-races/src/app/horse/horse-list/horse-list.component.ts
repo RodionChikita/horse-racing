@@ -11,8 +11,8 @@ import { tap, catchError } from 'rxjs/operators';
   templateUrl: './horse-list.component.html',
 })
 export class  HorseListComponent {
- horses: HorseDto[];
-  owners: OwnerDto[];
+  horses: HorseDto[] = [];
+  owners: OwnerDto[] = [];
 
   constructor(private horseService: HorseService, private ownerService: OwnerService) {
     this.loadHorses();
@@ -31,7 +31,7 @@ export class  HorseListComponent {
     });
   }
 
-  onRowInserting(e) {
+  onRowInserting(e: any) {
     const newHorse: CreateOrUpdateHorseDtoRq = {
       nickname: e.data.nickname,
       genderEnum: e.data.genderEnum,
@@ -44,7 +44,7 @@ export class  HorseListComponent {
     });
   }
 
-  onRowUpdating(e) {
+  onRowUpdating(e: any) {
     const updatedHorse: CreateOrUpdateHorseDtoRq = {
       id: e.oldData.id,
       nickname: e.newData.nickname || e.oldData.nickname,
@@ -58,7 +58,7 @@ export class  HorseListComponent {
     });
   }
 
-  onRowRemoving(e) {
+  onRowRemoving(e: any) {
     this.horseService.deleteById(e.data.id).subscribe(() => {
       this.loadHorses();
     });
