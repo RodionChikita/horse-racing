@@ -1,4 +1,3 @@
-// В файле horse-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HorseService } from '../horse.service';
 import { OwnerDto } from "../../owner/owner.models";
@@ -24,16 +23,16 @@ export class HorseListComponent implements OnInit {
   }
 
   loadHorses(): void {
-    this.horseService.findAll.subscribe(
-      (data) => this.horses = data,
-      (error) => console.error('Error loading horses', error)
+    this.horseService.findAll().subscribe( // Вызов как функции
+      (data: HorseDto[]) => this.horses = data,
+      (error: any) => console.error('Error loading horses', error)
     );
   }
 
   loadOwners(): void {
-    this.ownerService.findAll.subscribe(
-      (data) => this.owners = data,
-      (error) => console.error('Error loading owners', error)
+    this.ownerService.findAll().subscribe( // Вызов как функции
+      (data: OwnerDto[]) => this.owners = data,
+      (error: any) => console.error('Error loading owners', error)
     );
   }
 
@@ -42,20 +41,20 @@ export class HorseListComponent implements OnInit {
     return owner ? owner.name : 'Unknown';
   }
 
-  addHorse(event: any) {
+  addHorse(event: any): void {
     const newHorse: CreateOrUpdateHorseDtoRq = {
       nickname: event.data.nickname,
       genderEnum: event.data.genderEnum,
       age: event.data.age,
       ownerId: event.data.ownerId,
     };
-    this.horseService.createHorse(newHorse).subscribe(
-      (horse) => this.horses.push(horse),
-      (error) => console.error('Error adding horse', error)
+    this.horseService.insert(newHorse).subscribe( // Измените метод на insert
+      (horse: HorseDto) => this.horses.push(horse),
+      (error: any) => console.error('Error adding horse', error)
     );
   }
 
-  updateHorse(event: any) {
+  updateHorse(event: any): void {
     const updatedHorse: CreateOrUpdateHorseDtoRq = {
       id: event.oldData.id,
       nickname: event.newData.nickname || event.oldData.nickname,
@@ -63,24 +62,22 @@ export class HorseListComponent implements OnInit {
       age: event.newData.age || event.oldData.age,
       ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
-    this.horseService.updateHorse(updatedHorse).subscribe(
+    this.horseService.update(updatedHorse).subscribe( // Измените метод на update
       () => {},
-      (error) => console.error('Error updating horse', error)
+      (error: any) => console.error('Error updating horse', error)
     );
   }
 
-  deleteHorse(event: any) {
+  deleteHorse(event: any): void {
     const horseId = event.data.id;
     event.promise = this.horseService.deleteById(horseId).toPromise().then(
       () => {
-        // Удаление прошло успешно, обновите список лошадей
         this.horses = this.horses.filter(h => h.id !== horseId);
       },
-      (error) => {
+      (error: any) => {
         console.error('Error deleting horse', error);
         event.cancel = true;
       }
     );
   }
 }
-
