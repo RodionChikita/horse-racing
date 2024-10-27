@@ -57,7 +57,7 @@ export class HorseListComponent implements OnInit {
 
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
-        const owner = this.owners.find(o => o.id === createdHorse.ownerId);
+        const owner = this.owners.find(o => o.id === newHorse.ownerId);
         this.horses.push({
           ...createdHorse,
           owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
