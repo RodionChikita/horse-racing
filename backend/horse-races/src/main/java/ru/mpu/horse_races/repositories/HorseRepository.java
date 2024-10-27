@@ -21,8 +21,8 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
     List<Horse> findAll();
 
     @Query(value = "INSERT INTO horses (nickname, gender, age, owner_id) VALUES (?, ?::gender, ?, ?)", nativeQuery = true)
-    Horse save(@Param("nickname") String nickname,
-               @Param("gender") String gender,
-               @Param("age") byte age,
-               @Param("ownerId") Long ownerId);
+    Horse save(String nickname,
+               String gender,
+               byte age,
+               Long ownerId);
 }
