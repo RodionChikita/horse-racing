@@ -52,11 +52,12 @@ export class HorseListComponent implements OnInit {
       nickname: event.data.nickname,
       genderEnum: event.data.genderEnum,
       age: event.data.age,
-      ownerId: event.data.ownerId, // Убедитесь, что формируется правильно
+      ownerId: event.data.ownerId,
     };
 
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
+        // Обновление списка владельца
         const owner = this.owners.find(o => o.id === newHorse.ownerId);
         this.horses.push({
           ...createdHorse,
@@ -73,14 +74,15 @@ export class HorseListComponent implements OnInit {
       nickname: event.newData.nickname || event.oldData.nickname,
       genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
       age: event.newData.age || event.oldData.age,
-      ownerId: event.newData.ownerId || event.oldData.ownerId, // Убедитесь, что правильно определяется
+      ownerId: event.newData.ownerId || event.oldData.ownerId,
     };
 
     this.horseService.update(updatedHorse).subscribe(
       () => {
         const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
         if (updatedIndex > -1) {
-          this.horses[updatedIndex].owner = this.owners.find(o => o.id === updatedHorse.ownerId) ?? this.horses[updatedIndex].owner;
+          const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
+          this.horses[updatedIndex].owner = owner ?? { id: updatedHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' };
         }
       },
       (error: any) => console.error('Error updating horse', error)
