@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateHorseDtoRq;
 import ru.mpu.horse_races.domain.dtos.HorseDto;
 import ru.mpu.horse_races.domain.dtos.RaceResultDto;
-import ru.mpu.horse_races.domain.entities.GenderEnum;
 import ru.mpu.horse_races.domain.entities.Horse;
 import ru.mpu.horse_races.exceptions.NotFoundException;
 import ru.mpu.horse_races.mappers.MappersToDto;
@@ -39,7 +38,7 @@ public class HorseServiceImpl implements HorseService {
         logger.info("Inserting horse with data: {}", horse.getGenderEnum());
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
-        var horseInserted = new Horse(0L, horse.getNickname(), GenderEnum.MALE, horse.getAge(), owner);
+        var horseInserted = new Horse(0L, horse.getNickname(),horse.getGenderEnum(), horse.getAge(), owner);
         return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted));
     }
 
@@ -53,7 +52,7 @@ public class HorseServiceImpl implements HorseService {
         horseUpdated.setAge(horse.getAge());
         horseUpdated.setOwner(owner);
         horseUpdated.setNickname(horse.getNickname());
-        horseUpdated.setGenderEnum(GenderEnum.valueOf(horse.getGenderEnum()));
+        horseUpdated.setGenderEnum(horse.getGenderEnum());
         return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated));
     }
 

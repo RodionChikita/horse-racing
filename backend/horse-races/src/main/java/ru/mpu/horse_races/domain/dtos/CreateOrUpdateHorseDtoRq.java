@@ -15,7 +15,7 @@ public class CreateOrUpdateHorseDtoRq {
 
     private String nickname;
 
-    private String genderEnum;
+    private GenderEnum genderEnum;
 
     private byte age;
 
