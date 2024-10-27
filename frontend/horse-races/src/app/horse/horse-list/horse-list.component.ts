@@ -14,6 +14,25 @@ export class HorseListComponent {
   horses: HorseDto[] = [];  // Загрузите лошадей из сервиса
   owners: OwnerDto[] = [];  // Загрузите владельцев из сервиса
 
+    constructor(private horseService: HorseService, private ownerService: OwnerService) {}
+
+    ngOnInit() {
+        this.loadHorses();
+        this.loadOwners();
+    }
+
+    loadHorses() {
+        this.horseService.findAll().subscribe((data) => {
+            this.horses = data;
+        });
+    }
+
+    loadOwners() {
+        this.ownerService.findAll().subscribe((data) => {
+            this.owners = data;
+        });
+    }
+
   getOwnerName(ownerId: number): string {
     const owner = this.owners.find(o => o.id === ownerId);
     return owner ? owner.name : 'Unknown';
@@ -39,24 +58,7 @@ export class HorseListComponent {
       ownerId: event.newData.ownerId || event.oldData.ownerId, // Передаем ownerId
     };
 
-//     constructor(private horseService: HorseService, private ownerService: OwnerService) {}
-//
-//     ngOnInit() {
-//         this.loadHorses();
-//         this.loadOwners();
-//     }
-//
-//     loadHorses() {
-//         this.horseService.findAll().subscribe((data) => {
-//             this.horses = data;
-//         });
-//     }
-//
-//     loadOwners() {
-//         this.ownerService.findAll().subscribe((data) => {
-//             this.owners = data;
-//         });
-//     }
+
 //
 //     addHorse(e: any) {
 //         const newHorse: CreateOrUpdateHorseDtoRq = e.data;
