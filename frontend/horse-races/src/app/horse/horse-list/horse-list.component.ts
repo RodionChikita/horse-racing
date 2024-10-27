@@ -57,7 +57,6 @@ export class HorseListComponent implements OnInit {
 
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
-        // Обновление списка владельца
         const owner = this.owners.find(o => o.id === newHorse.ownerId);
         this.horses.push({
           ...createdHorse,
@@ -81,8 +80,7 @@ export class HorseListComponent implements OnInit {
       () => {
         const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
         if (updatedIndex > -1) {
-          const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
-          this.horses[updatedIndex].owner = owner ?? { id: updatedHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' };
+          this.horses[updatedIndex].owner = this.owners.find(o => o.id === updatedHorse.ownerId) ?? this.horses[updatedIndex].owner;
         }
       },
       (error: any) => console.error('Error updating horse', error)
