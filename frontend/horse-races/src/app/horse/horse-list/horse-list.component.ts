@@ -52,17 +52,15 @@ export class HorseListComponent implements OnInit {
       nickname: event.data.nickname,
       genderEnum: event.data.genderEnum,
       age: event.data.age,
-      ownerId: event.data.ownerId,
+      ownerId: event.data.ownerId, // Убедитесь, что формируется правильно
     };
-
-    console.log('Adding horse with ownerId:', newHorse.ownerId); // Логирование для проверки
 
     this.horseService.insert(newHorse).subscribe(
       (createdHorse: HorseDto) => {
-        const owner = this.owners.find(o => o.id === event.data.ownerId);
+        const owner = this.owners.find(o => o.id === newHorse.ownerId);
         this.horses.push({
           ...createdHorse,
-          owner: owner ?? { id: event.data.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
+          owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
         });
       },
       (error: any) => console.error('Error adding horse', error)
@@ -75,10 +73,8 @@ export class HorseListComponent implements OnInit {
       nickname: event.newData.nickname || event.oldData.nickname,
       genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
       age: event.newData.age || event.oldData.age,
-      ownerId: event.newData.ownerId || event.oldData.ownerId,
+      ownerId: event.newData.ownerId || event.oldData.ownerId, // Убедитесь, что правильно определяется
     };
-
-    console.log('Updating horse with ownerId:', updatedHorse.ownerId); // Логирование для проверки
 
     this.horseService.update(updatedHorse).subscribe(
       () => {
