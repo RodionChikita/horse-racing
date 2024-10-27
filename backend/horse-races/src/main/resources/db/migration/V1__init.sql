@@ -19,6 +19,8 @@ horses(
     primary key (id)
 );
 
+ALTER TABLE horses ALTER COLUMN gender TYPE gender USING gender::gender;
+
 create table
 jockeys(
     id bigserial,
