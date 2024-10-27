@@ -1,6 +1,7 @@
 package ru.mpu.horse_races.services;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mpu.horse_races.domain.dtos.CreateOrUpdateHorseDtoRq;
@@ -14,6 +15,8 @@ import ru.mpu.horse_races.repositories.OwnerRepository;
 import ru.mpu.horse_races.repositories.RaceResultRepository;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,9 +28,12 @@ public class HorseServiceImpl implements HorseService {
 
     private final RaceResultRepository raceResultRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(HorseServiceImpl.class);
+
     @Override
     @Transactional
     public HorseDto insert(CreateOrUpdateHorseDtoRq horse) {
+        logger.info("Inserting horse with data: {}", horse);
         horse.setId(0L);
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));

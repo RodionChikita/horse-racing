@@ -33,4 +33,5 @@ spring:
 
 logging:
   level:
-    ROOT: ERROR
+    ROOT: INFO
+    ru.mpu.horse_races.services: DEBUG
