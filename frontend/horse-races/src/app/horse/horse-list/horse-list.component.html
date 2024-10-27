@@ -21,21 +21,34 @@
                 [height]="525"
         ></dxo-popup>
 
-        <dxo-form [(ngModel)]="currentHorse">
-            <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-                <dxi-item dataField="nickname" caption="Nickname" [isRequired]="true"></dxi-item>
+        <form [formGroup]="horseForm">
+            <div>
+                <label for="nickname">Nickname</label>
+                <input id="nickname" formControlName="nickname" />
+            </div>
 
-                <dxi-item dataField="genderEnum" caption="Gender" [editorType]="'dxSelectBox'" [isRequired]="true"
-                          [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }">
-                </dxi-item>
+            <div>
+                <label for="gender">Gender</label>
+                <select id="gender" formControlName="genderEnum">
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                </select>
+            </div>
 
-                <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
+            <div>
+                <label for="age">Age</label>
+                <input type="number" id="age" formControlName="age" />
+            </div>
 
-                <dxi-item dataField="ownerId" caption="Owner" [editorType]="'dxSelectBox'" [isRequired]="true"
-                          [editorOptions]="{ dataSource: owners, valueExpr: 'id', displayExpr: 'name' }">
-                </dxi-item>
-            </dxi-item>
-        </dxo-form>
+            <div>
+                <label for="ownerId">Owner</label>
+                <select id="ownerId" formControlName="ownerId">
+                    <option *ngFor="let owner of owners" [value]="owner.id">{{ owner.name }}</option>
+                </select>
+            </div>
+
+            <button type="button" (click)="saveHorse()">Save</button>
+        </form>
     </dxo-editing>
 
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
