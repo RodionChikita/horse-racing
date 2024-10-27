@@ -28,14 +28,26 @@ export class  HorseListComponent {
   }
 
   insertHorse(horse: HorseDto) {
-    this.horseService.insert(horse).subscribe(() => this.loadHorses());
+    const request: CreateOrUpdateHorseDtoRq = this.convertToCreateOrUpdateHorse(horse);
+    this.horseService.insert(request).subscribe(() => this.loadHorses());
   }
 
   updateHorse(horse: HorseDto) {
-    this.horseService.update(horse).subscribe(() => this.loadHorses());
+    const request: CreateOrUpdateHorseDtoRq = this.convertToCreateOrUpdateHorse(horse);
+    this.horseService.update(request).subscribe(() => this.loadHorses());
   }
 
   deleteHorse(id: number) {
     this.horseService.deleteById(id).subscribe(() => this.loadHorses());
+  }
+
+  private convertToCreateOrUpdateHorse(horse: HorseDto): CreateOrUpdateHorseDtoRq {
+    return {
+      id: horse.id,
+      nickname: horse.nickname,
+      genderEnum: horse.genderEnum,
+      age: horse.age,
+      ownerId: horse.owner.id,
+    };
   }
 }

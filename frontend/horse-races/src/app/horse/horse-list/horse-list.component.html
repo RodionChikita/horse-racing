@@ -4,6 +4,9 @@
             [dataSource]="horses"
             keyExpr="id"
             [showBorders]="true"
+            (onRowInserted)="insertHorse($event.data)"
+            (onRowUpdated)="updateHorse($event.data)"
+            (onRowRemoved)="deleteHorse($event.key)"
     >
         <dxo-paging [enabled]="false"></dxo-paging>
         <dxo-editing
@@ -11,9 +14,6 @@
                 [allowUpdating]="true"
                 [allowAdding]="true"
                 [allowDeleting]="true"
-                (onRowInserted)="insertHorse($event.data)"
-                (onRowUpdated)="updateHorse($event.data)"
-                (onRowRemoved)="deleteHorse($event.data.id)"
         >
             <dxo-popup
                     title="Horse Info"
