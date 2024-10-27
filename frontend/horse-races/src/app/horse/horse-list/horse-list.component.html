@@ -35,17 +35,7 @@
 
                 <dxi-item dataField="age" caption="Age" dataType="number" [isRequired]="true"></dxi-item>
 
-                <dxi-item
-                        dataField="ownerId"
-                        caption="Owner"
-                        [editorType]="'dxSelectBox'"
-                        [isRequired]="true"
-                        [editorOptions]="{
-        dataSource: owners,
-        valueExpr: 'id',
-        displayExpr: 'name'
-    }">
-                </dxi-item>
+                <dxi-item dataField="ownerId"></dxi-item>
             </dxi-item>
         </dxo-form>
     </dxo-editing>
@@ -53,6 +43,10 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <dxi-column dataField="owner.name" caption="Owner"></dxi-column>
+<!--    <dxi-column dataField="owner.name" caption="Owner"></dxi-column>-->
+    <dxi-column dataField="ownerId" caption="Owner" [width]="125">
+        <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id">
+        </dxo-lookup>
+    </dxi-column>
 
 </dx-data-grid>
