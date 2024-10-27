@@ -37,6 +37,7 @@ export class HorseListComponent implements OnInit {
     // Add a new horse
     addHorse(e: any) {
         const newHorse: CreateOrUpdateHorseDtoRq = e.data;
+        console.log('Adding horse with data:', newHorse);
         e.promise = this.horseService.insert(newHorse).toPromise().then(
             () => {
                 this.loadHorses(); // Reload data once insertion is successful
