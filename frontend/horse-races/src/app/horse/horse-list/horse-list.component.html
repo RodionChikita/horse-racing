@@ -41,8 +41,12 @@
     <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
     <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
-    <!-- Modify this column to reflect owner’s name directly -->
-    <dxi-column dataField="owner.name" caption="Owner Name" [width]="150"></dxi-column>
+    <!-- Use a cell template to display the owner's name while retaining ownerId for operations -->
+    <dxi-column dataField="ownerId" caption="Owner" [width]="150">
+        <ng-template dxTemplate="cellTemplate" let-data>
+            {{ owners.find(owner => owner.id === data.value)?.name || '' }}
+        </ng-template>
+    </dxi-column>
 </dx-data-grid>
 
 
