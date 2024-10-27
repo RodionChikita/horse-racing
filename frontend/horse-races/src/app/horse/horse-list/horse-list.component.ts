@@ -36,10 +36,10 @@ export class HorseListComponent implements OnInit {
     );
   }
 
-  getOwnerName(ownerId: number): string {
-    const owner = this.owners.find(o => o.id === ownerId);
-    return owner ? owner.name : 'Unknown';
-  }
+getOwnerName(ownerId: number): string {
+  const owner = this.owners.find(o => o.id === ownerId);
+  return owner ? owner.name : 'Unknown'; // Если владелец не найден, вернуть 'Unknown'
+}
 
   addHorse(event: any): void {
     const newHorse: CreateOrUpdateHorseDtoRq = {
