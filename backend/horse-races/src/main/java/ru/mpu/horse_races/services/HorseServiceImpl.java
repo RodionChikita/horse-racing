@@ -39,7 +39,7 @@ public class HorseServiceImpl implements HorseService {
         logger.info("Inserting horse with data: {}", horse.getGenderEnum());
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
-        var horseInserted = new Horse(0L, horse.getNickname(), GenderEnum.valueOf(horse.getGenderEnum().name()), horse.getAge(), owner);
+        var horseInserted = new Horse(0L, horse.getNickname(), GenderEnum.valueOf(horse.getGenderEnum()), horse.getAge(), owner);
         return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted));
     }
 
@@ -53,7 +53,7 @@ public class HorseServiceImpl implements HorseService {
         horseUpdated.setAge(horse.getAge());
         horseUpdated.setOwner(owner);
         horseUpdated.setNickname(horse.getNickname());
-        horseUpdated.setGenderEnum(horse.getGenderEnum());
+        horseUpdated.setGenderEnum(GenderEnum.valueOf(horse.getGenderEnum()));
         return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated));
     }
 
