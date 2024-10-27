@@ -73,7 +73,7 @@ updateHorse(e: any) {
 }
 
 private validateHorse(horse: CreateOrUpdateHorseDtoRq): boolean {
-    return horse.nickname && horse.genderEnum && horse.age != null && horse.ownerId != null;
+    return !!horse.nickname && !!horse.genderEnum && horse.age != null && horse.ownerId != null;
 }
 
     deleteHorse(e: any) {
