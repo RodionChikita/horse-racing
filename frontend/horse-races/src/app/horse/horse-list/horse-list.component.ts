@@ -45,6 +45,45 @@ export class HorseListComponent implements OnInit {
     });
   }
 
+  addHorse(e: any) {
+    const newHorse: CreateOrUpdateHorseDtoRq = this.horseForm.value;
+    e.promise = this.horseService.insert(newHorse).toPromise().then(
+      () => {
+        this.loadHorses();
+      },
+      (error: any) => {
+        console.error('Failed to add horse', error);
+        e.cancel = true;
+      }
+    );
+  }
+
+  updateHorse(e: any) {
+    const updatedHorse: CreateOrUpdateHorseDtoRq = { ...e.oldData, ...e.newData };
+    e.promise = this.horseService.update(updatedHorse).toPromise().then(
+      () => {
+        this.loadHorses();
+      },
+      (error: any) => {
+        console.error('Failed to update horse', error);
+        e.cancel = true;
+      }
+    );
+  }
+
+  deleteHorse(e: any) {
+    const horseId = e.data.id;
+    e.promise = this.horseService.deleteById(horseId).toPromise().then(
+      () => {
+        this.loadHorses();
+      },
+      (error: any) => {
+        console.error('Failed to delete horse', error);
+        e.cancel = true;
+      }
+    );
+  }
+
   saveHorse() {
     if (this.horseForm.valid) {
       const newHorse: CreateOrUpdateHorseDtoRq = this.horseForm.value;
@@ -58,18 +97,4 @@ export class HorseListComponent implements OnInit {
       );
     }
   }
-}
-
-    deleteHorse(e: any) {
-        const horseId = e.data.id;
-        e.promise = this.horseService.deleteById(horseId).toPromise().then(
-            () => {
-                this.loadHorses();
-            },
-            (error) => {
-                console.error('Failed to delete horse', error);
-                e.cancel = true;
-            }
-        );
-    }
 }
