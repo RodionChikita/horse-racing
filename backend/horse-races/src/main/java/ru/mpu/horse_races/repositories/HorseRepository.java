@@ -20,7 +20,7 @@ public interface HorseRepository extends JpaRepository<Horse, Long> {
     @EntityGraph("horse-owner-entity-graph")
     List<Horse> findAll();
 
-    @Query(value = "INSERT INTO horses (nickname, gender, age, owner_id) VALUES (:nickname, :gender::gender, :age, :ownerId)", nativeQuery = true)
+    @Query(value = "INSERT INTO horses (nickname, gender, age, owner_id) VALUES (?, ?::gender, ?, ?)", nativeQuery = true)
     Horse save(@Param("nickname") String nickname,
                @Param("gender") String gender,
                @Param("age") byte age,
