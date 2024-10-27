@@ -48,8 +48,19 @@ export class HorseListComponent implements OnInit {
       age: event.data.age,
       ownerId: event.data.ownerId,
     };
-    this.horseService.insert(newHorse).subscribe( // Измените метод на insert
-      (horse: HorseDto) => this.horses.push(horse),
+
+    this.horseService.insert(newHorse).subscribe(
+      (response: any) => {
+        const owner = this.owners.find(o => o.id === newHorse.ownerId);
+        const transformedHorse: HorseDto = {
+          id: response.id,
+          nickname: response.nickname,
+          genderEnum: response.genderEnum,
+          age: response.age,
+          owner: owner ?? { id: newHorse.ownerId, name: 'Unknown', address: '', phoneNumber: '' }
+        };
+        this.horses.push(transformedHorse);
+      },
       (error: any) => console.error('Error adding horse', error)
     );
   }
