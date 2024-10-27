@@ -11,8 +11,8 @@ import { tap, catchError } from 'rxjs/operators';
   templateUrl: './horse-list.component.html',
 })
 export class  HorseListComponent {
-  horses: HorseDto[] = [];
-  owners: OwnerDto[] = [];
+ horses: HorseDto[];
+  owners: OwnerDto[];
 
   constructor(private horseService: HorseService, private ownerService: OwnerService) {
     this.loadHorses();
@@ -20,32 +20,47 @@ export class  HorseListComponent {
   }
 
   loadHorses() {
-    this.horseService.findAll().subscribe(data => {
+    this.horseService.findAll().subscribe((data) => {
       this.horses = data;
     });
   }
 
   loadOwners() {
-    this.ownerService.findAll().subscribe(data => {
+    this.ownerService.findAll().subscribe((data) => {
       this.owners = data;
     });
   }
 
-  insertHorse(horse: CreateOrUpdateHorseDtoRq) {
-    this.horseService.insert(horse).subscribe(() => {
+  onRowInserting(e) {
+    const newHorse: CreateOrUpdateHorseDtoRq = {
+      nickname: e.data.nickname,
+      genderEnum: e.data.genderEnum,
+      age: e.data.age,
+      ownerId: e.data.ownerId,
+    };
+
+    this.horseService.insert(newHorse).subscribe(() => {
       this.loadHorses();
     });
   }
 
-  updateHorse(horse: CreateOrUpdateHorseDtoRq) {
-    this.horseService.update(horse).subscribe(() => {
+  onRowUpdating(e) {
+    const updatedHorse: CreateOrUpdateHorseDtoRq = {
+      id: e.oldData.id,
+      nickname: e.newData.nickname || e.oldData.nickname,
+      genderEnum: e.newData.genderEnum || e.oldData.genderEnum,
+      age: e.newData.age || e.oldData.age,
+      ownerId: e.newData.ownerId || e.oldData.ownerId,
+    };
+
+    this.horseService.update(updatedHorse).subscribe(() => {
       this.loadHorses();
     });
   }
 
-  deleteHorse(id: number) {
-    this.horseService.deleteById(id).subscribe(() => {
+  onRowRemoving(e) {
+    this.horseService.deleteById(e.data.id).subscribe(() => {
       this.loadHorses();
     });
   }
- }
+}

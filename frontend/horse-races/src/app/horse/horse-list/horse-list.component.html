@@ -5,27 +5,26 @@
             keyExpr="id"
             [showBorders]="true"
     >
+        <dxo-paging [enabled]="false"></dxo-paging>
         <dxo-editing
                 mode="popup"
                 [allowUpdating]="true"
                 [allowAdding]="true"
                 [allowDeleting]="true"
-                [useIcons]="true">
+        >
             <dxo-popup
                     title="Horse Info"
                     [showTitle]="true"
                     [width]="700"
-                    [height]="525">
+                    [height]="400"
+            >
             </dxo-popup>
             <dxo-form>
                 <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-                    <dxi-item dataField="nickname" caption="Nickname"></dxi-item>
-                    <dxi-item dataField="genderEnum" caption="Gender" editorType="dxSelectBox"
-                              [editorOptions]="{ items: ['MALE', 'FEMALE'], valueExpr: 'this', displayExpr: 'this' }">
-                    </dxi-item>
+                    <dxi-item dataField="nickname"></dxi-item>
+                    <dxi-item dataField="genderEnum"></dxi-item>
                     <dxi-item dataField="age"></dxi-item>
-                    <dxi-item dataField="ownerId" caption="Owner" editorType="dxSelectBox">
-                        <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
+                    <dxi-item dataField="ownerId" editorType="dxLookup" [editorOptions]="{ dataSource: owners, displayExpr: 'name', valueExpr: 'id' }">
                     </dxi-item>
                 </dxi-item>
             </dxo-form>
@@ -33,7 +32,10 @@
 
         <dxi-column dataField="nickname" caption="Nickname"></dxi-column>
         <dxi-column dataField="genderEnum" caption="Gender"></dxi-column>
-        <dxi-column dataField="age"></dxi-column>
-        <dxi-column dataField="owner.name" caption="Owner"></dxi-column>
+        <dxi-column dataField="age" caption="Age"></dxi-column>
+        <dxi-column dataField="ownerId" caption="Owner" [width]="150">
+            <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id">
+            </dxo-lookup>
+        </dxi-column>
     </dx-data-grid>
 </div>
