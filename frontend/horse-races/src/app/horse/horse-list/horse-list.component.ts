@@ -20,34 +20,32 @@ export class  HorseListComponent {
   }
 
   loadHorses() {
-    this.horseService.findAll().subscribe(data => this.horses = data);
+    this.horseService.findAll().subscribe(data => {
+      this.horses = data;
+    });
   }
 
   loadOwners() {
-    this.ownerService.findAll().subscribe(data => this.owners = data);
+    this.ownerService.findAll().subscribe(data => {
+      this.owners = data;
+    });
   }
 
-  insertHorse(horse: HorseDto) {
-    const request: CreateOrUpdateHorseDtoRq = this.convertToCreateOrUpdateHorse(horse);
-    this.horseService.insert(request).subscribe(() => this.loadHorses());
+  insertHorse(horse: CreateOrUpdateHorseDtoRq) {
+    this.horseService.insert(horse).subscribe(() => {
+      this.loadHorses();
+    });
   }
 
-  updateHorse(horse: HorseDto) {
-    const request: CreateOrUpdateHorseDtoRq = this.convertToCreateOrUpdateHorse(horse);
-    this.horseService.update(request).subscribe(() => this.loadHorses());
+  updateHorse(horse: CreateOrUpdateHorseDtoRq) {
+    this.horseService.update(horse).subscribe(() => {
+      this.loadHorses();
+    });
   }
 
   deleteHorse(id: number) {
-    this.horseService.deleteById(id).subscribe(() => this.loadHorses());
+    this.horseService.deleteById(id).subscribe(() => {
+      this.loadHorses();
+    });
   }
-
-  private convertToCreateOrUpdateHorse(horse: HorseDto): CreateOrUpdateHorseDtoRq {
-    return {
-      id: horse.id,
-      nickname: horse.nickname,
-      genderEnum: horse.genderEnum,
-      age: horse.age,
-      ownerId: horse.owner.id,
-    };
-  }
-}
+ }
