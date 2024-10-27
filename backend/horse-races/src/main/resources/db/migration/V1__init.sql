@@ -1,5 +1,4 @@
 create type gender AS enum ('MALE', 'FEMALE');
-ALTER TABLE horses ALTER COLUMN gender TYPE gender USING gender::gender;
 
 create table
 owners(
@@ -19,6 +18,8 @@ horses(
     owner_id bigint references owners(id) on delete cascade,
     primary key (id)
 );
+
+ALTER TABLE horses ALTER COLUMN gender TYPE gender USING gender::gender;
 
 create table
 jockeys(
