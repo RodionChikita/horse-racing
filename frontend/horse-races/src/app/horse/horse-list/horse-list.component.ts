@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HorseService } from '../horse.service';
-import { OwnerDto } from "../../owner/owner.models";
-import { CreateOrUpdateHorseDtoRq, HorseDto } from "../horse.models";
-import { OwnerService } from "../../owner/owner.service";
-import { Observable } from 'rxjs';
+import { OwnerService } from '../../owner/owner.service';
+import { OwnerDto } from '../../owner/owner.models';
+import { HorseDto, CreateOrUpdateHorseDtoRq } from '../horse.models';
+import { Observable, of } from 'rxjs'; // Добавьте импорт 'of'
 import { tap, catchError } from 'rxjs/operators';
 
 @Component({
@@ -37,7 +37,7 @@ export class HorseListComponent implements OnInit {
       tap((owners) => this.owners = owners),
       catchError((error) => {
         console.error('Error loading owners', error);
-        return of([]);
+        return of([]); // Убедитесь, что 'of' импортирован
       })
     );
   }
