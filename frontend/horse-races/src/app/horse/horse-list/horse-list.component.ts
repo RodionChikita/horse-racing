@@ -52,18 +52,18 @@ addHorse(event: any): void {
 
   this.horseService.insert(newHorse).subscribe(
     (createdHorse: HorseDto) => {
-      // Find the owner from the list of owners
-      const owner = this.owners.find(o => o.id === createdHorse.ownerId);
+      // Find the owner using ownerId from newHorse
+      const owner = this.owners.find(o => o.id === newHorse.ownerId);
       // Assign the owner object to the created horse
       createdHorse.owner = owner!;
-      // Properly update the horses array with immutable approach
+      // Add the newly created horse to the list
       this.horses = [...this.horses, createdHorse];
-      // Ensure the default behavior does not duplicate
-      event.cancel = true;
+      event.cancel = true; // Ensure the default behavior does not duplicate
     },
     (error: any) => console.error('Error adding horse', error)
   );
 }
+
 
 updateHorse(event: any): void {
   const updatedHorse: CreateOrUpdateHorseDtoRq = {
@@ -78,8 +78,9 @@ updateHorse(event: any): void {
     (updatedData: HorseDto) => {
       const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
       if (updatedIndex > -1) {
+        // Find the owner using ownerId from updatedHorse
         const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
-        // Update only the existing entry with new data
+        // Update the existing entry with new data and owner
         this.horses[updatedIndex] = {
           ...this.horses[updatedIndex],
           ...updatedData,
