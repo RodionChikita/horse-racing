@@ -42,55 +42,44 @@ export class HorseListComponent implements OnInit {
     );
   }
 
-addHorse(event: any): void {
-  const newHorse: CreateOrUpdateHorseDtoRq = {
-    nickname: event.data.nickname,
-    genderEnum: event.data.genderEnum,
-    age: event.data.age,
-    ownerId: event.data.ownerId,
-  };
+  addHorse(event: any): void {
+    const newHorse: CreateOrUpdateHorseDtoRq = {
+      nickname: event.data.nickname,
+      genderEnum: event.data.genderEnum,
+      age: event.data.age,
+      ownerId: event.data.ownerId,
+    };
 
-  this.horseService.insert(newHorse).subscribe(
-    (createdHorse: HorseDto) => {
-      // Find the owner using ownerId from newHorse
-      const owner = this.owners.find(o => o.id === newHorse.ownerId);
-      // Assign the owner object to the created horse
-      createdHorse.owner = owner!;
-      // Add the newly created horse to the list
-      this.horses = [...this.horses, createdHorse];
-      event.cancel = true; // Ensure the default behavior does not duplicate
-    },
-    (error: any) => console.error('Error adding horse', error)
-  );
-}
+    this.horseService.insert(newHorse).subscribe(
+      (createdHorse: HorseDto) => {
+        const owner = this.owners.find(o => o.id === newHorse.ownerId);
+        createdHorse.owner = owner!;
+        this.horses.push(createdHorse);
+      },
+      (error: any) => console.error('Error adding horse', error)
+    );
+  }
 
+  updateHorse(event: any): void {
+    const updatedHorse: CreateOrUpdateHorseDtoRq = {
+      id: event.oldData.id,
+      nickname: event.newData.nickname || event.oldData.nickname,
+      genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
+      age: event.newData.age || event.oldData.age,
+      ownerId: event.newData.ownerId || event.oldData.ownerId,
+    };
 
-updateHorse(event: any): void {
-  const updatedHorse: CreateOrUpdateHorseDtoRq = {
-    id: event.oldData.id,
-    nickname: event.newData.nickname || event.oldData.nickname,
-    genderEnum: event.newData.genderEnum || event.oldData.genderEnum,
-    age: event.newData.age || event.oldData.age,
-    ownerId: event.newData.ownerId || event.oldData.ownerId,
-  };
-
-  this.horseService.update(updatedHorse).subscribe(
-    (updatedData: HorseDto) => {
-      const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
-      if (updatedIndex > -1) {
-        // Find the owner using ownerId from updatedHorse
+    this.horseService.update(updatedHorse).subscribe(
+      () => {
+        const updatedIndex = this.horses.findIndex(horse => horse.id === updatedHorse.id);
         const owner = this.owners.find(o => o.id === updatedHorse.ownerId);
-        // Update the existing entry with new data and owner
-        this.horses[updatedIndex] = {
-          ...this.horses[updatedIndex],
-          ...updatedData,
-          owner: owner!
-        };
-      }
-    },
-    (error: any) => console.error('Error updating horse', error)
-  );
-}
+        if (updatedIndex > -1 && owner) {
+          this.horses[updatedIndex].owner = owner;
+        }
+      },
+      (error: any) => console.error('Error updating horse', error)
+    );
+  }
 
   deleteHorse(event: any): void {
     const horseId = event.data.id;
