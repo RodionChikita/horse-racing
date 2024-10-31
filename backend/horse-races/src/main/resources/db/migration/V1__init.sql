@@ -1,5 +1,3 @@
-create type gender AS enum ('MALE', 'FEMALE');
-
 create table
 owners(
     id bigserial,
@@ -13,13 +11,12 @@ create table
 horses(
     id bigserial,
     nickname varchar(255),
-    gender gender,
+    gender varchar(255),
     age smallint,
     owner_id bigint references owners(id) on delete cascade,
     primary key (id)
 );
 
-ALTER TABLE horses ALTER COLUMN gender TYPE gender USING gender::gender;
 
 create table
 jockeys(

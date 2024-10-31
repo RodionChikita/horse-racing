@@ -38,8 +38,8 @@ public class HorseServiceImpl implements HorseService {
         logger.info("Inserting horse with data: {}", horse.getGenderEnum());
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
-        var horseInserted = new Horse(0L, horse.getNickname(),horse.getGenderEnum(), horse.getAge(), owner);
-        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted.getNickname(), horseInserted.getGenderEnum().name(), horseInserted.getAge(), horseInserted.getOwner().getId()));
+        var horseInserted = new Horse(0L, horse.getNickname(), horse.getGenderEnum().getName(), horse.getAge(), owner);
+        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseInserted));
     }
 
     @Override
@@ -52,8 +52,8 @@ public class HorseServiceImpl implements HorseService {
         horseUpdated.setAge(horse.getAge());
         horseUpdated.setOwner(owner);
         horseUpdated.setNickname(horse.getNickname());
-        horseUpdated.setGenderEnum(horse.getGenderEnum());
-        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated.getNickname(), horseUpdated.getGenderEnum().name(), horseUpdated.getAge(), horseUpdated.getOwner().getId()));
+        horseUpdated.setGenderEnum(horse.getGenderEnum().getName());
+        return MappersToDto.MAP_TO_HORSE_DTO_FUNCTION.apply(horseRepository.save(horseUpdated));
     }
 
     @Override
