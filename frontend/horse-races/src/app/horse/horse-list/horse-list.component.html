@@ -42,10 +42,10 @@
     <dxi-column dataField="age" caption="Age" dataType="number"></dxi-column>
 
     <!-- Hidden ownerId column -->
-    <dxi-column dataField="ownerId" caption="Owner ID" [visible]="false">
+    <dxi-column dataField="ownerId" caption="Owner ID" [visible]="true">
         <dxo-lookup [dataSource]="owners" displayExpr="name" valueExpr="id"></dxo-lookup>
     </dxi-column>
 
     <!-- New column for owner's name -->
-    <dxi-column dataField="owner.name" caption="Owner" [width]="125"></dxi-column>
+<!--    <dxi-column dataField="owner.name" caption="Owner" [width]="125"></dxi-column>-->
 </dx-data-grid>
