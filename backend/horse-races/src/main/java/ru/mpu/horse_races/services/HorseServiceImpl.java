@@ -16,26 +16,27 @@ import ru.mpu.horse_races.repositories.RaceResultRepository;
 
 import java.util.List;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HorseServiceImpl implements HorseService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HorseServiceImpl.class);
+
     private final HorseRepository horseRepository;
 
     private final OwnerRepository ownerRepository;
 
     private final RaceResultRepository raceResultRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(HorseServiceImpl.class);
 
     @Override
     @Transactional
     public HorseDto insert(CreateOrUpdateHorseDtoRq horse) {
-        logger.info("Inserting horse with data: {}", horse);
-        logger.info("Inserting horse with data: {}", horse.getOwnerId());
-        logger.info("Inserting horse with data: {}", horse.getGenderEnum());
+        LOGGER.info("Inserting horse with data: {}", horse);
+        LOGGER.info("Inserting horse with data: {}", horse.getOwnerId());
+        LOGGER.info("Inserting horse with data: {}", horse.getGenderEnum());
         var owner = ownerRepository.findById(horse.getOwnerId())
                 .orElseThrow(() -> new NotFoundException("Owner with id %d not found".formatted(horse.getOwnerId())));
         var horseInserted = new Horse(0L, horse.getNickname(), horse.getGenderEnum().getName(), horse.getAge(), owner);

@@ -5,9 +5,13 @@ import ru.mpu.horse_races.domain.dtos.JockeyDto;
 import ru.mpu.horse_races.domain.dtos.OwnerDto;
 import ru.mpu.horse_races.domain.dtos.RaceDto;
 import ru.mpu.horse_races.domain.dtos.RaceResultDto;
-import ru.mpu.horse_races.domain.entities.*;
+import ru.mpu.horse_races.domain.entities.GenderEnum;
+import ru.mpu.horse_races.domain.entities.Horse;
+import ru.mpu.horse_races.domain.entities.Jockey;
+import ru.mpu.horse_races.domain.entities.Owner;
+import ru.mpu.horse_races.domain.entities.Race;
+import ru.mpu.horse_races.domain.entities.RaceResult;
 
-import java.util.GregorianCalendar;
 import java.util.function.Function;
 
 public class MappersToDto {

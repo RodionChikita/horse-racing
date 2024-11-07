@@ -34,6 +34,7 @@
         <checkstyle.config.url>
             https://raw.githubusercontent.com/OtusTeam/Spring/master/checkstyle.xml
         </checkstyle.config.url>
+        <dependency-check.version>8.4.0</dependency-check.version>
     </properties>
     <dependencies>
         <dependency>
@@ -85,6 +86,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Checkstyle Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -107,6 +109,24 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- OWASP Dependency-Check Plugin -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failBuildOnCVSS>7</failBuildOnCVSS> <!-- Fail the build if a vulnerability with a CVSS score of 7 or higher is found -->
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
