@@ -1,14 +1,34 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_DB: races
-      POSTGRES_USER: mpu
-      POSTGRES_PASSWORD: mpu
+      POSTGRES_DB: combined_db
+      POSTGRES_USER: combined_user
+      POSTGRES_PASSWORD: combined_password
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - horse-races-network
+
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: combined_db
+      DB_USER: combined_user
+      DB_PASSWORD: combined_password
+      DB_SCHEMA: keycloak
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
     networks:
       - horse-races-network
 
@@ -20,15 +40,18 @@ services:
     ports:
       - "9000:80"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/races
-      SPRING_DATASOURCE_USERNAME: mpu
-      SPRING_DATASOURCE_PASSWORD: mpu
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/combined_db
+      SPRING_DATASOURCE_USERNAME: combined_user
+      SPRING_DATASOURCE_PASSWORD: combined_password
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
+      KEYCLOAK_REALM: <Ваш_Realm>
+      KEYCLOAK_RESOURCE: <Ваш_Backend_Client_ID>
     depends_on:
       - postgres
+      - keycloak
     command: ["java", "-jar", "your-backend-application.jar"]
     networks:
       - horse-races-network
-
 
   frontend:
     image: frontend
@@ -41,7 +64,6 @@ services:
       - backend
     networks:
       - horse-races-network
-
 
 volumes:
   postgres_data:
