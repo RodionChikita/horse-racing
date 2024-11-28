@@ -21,9 +21,9 @@ spring:
     locations: "classpath:db/migration"
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/races
-    username: mpu
-    password: mpu
+    url: jdbc:postgresql://postgres:5432/combined_db
+    username: combined_user
+    password: combined_password
 
   jpa:
     generate-ddl: false
