@@ -27,6 +27,7 @@ services:
       DB_SCHEMA: keycloak
     ports:
       - "8080:8080"
+    command: [ "start-dev", "--http-port=8080" ]
     depends_on:
       - postgres
     networks:
