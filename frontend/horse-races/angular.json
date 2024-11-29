@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "horse-races:build:production"
+              "buildTarget": "horse-races:build:production"
             },
             "development": {
-              "browserTarget": "horse-races:build:development"
+              "buildTarget": "horse-races:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "horse-races:build"
+            "buildTarget": "horse-races:build"
           }
         },
         "test": {
