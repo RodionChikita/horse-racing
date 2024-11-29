@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { APP_INITIALIZER } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
+import { initializer } from '../utils/app-init';
 import {
   DxButtonModule,
   DxCheckBoxModule,
