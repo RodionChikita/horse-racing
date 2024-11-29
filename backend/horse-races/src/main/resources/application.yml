@@ -14,7 +14,6 @@
 #    path: /swagger
 server:
   port: 80
-
 spring:
   flyway:
     enabled: true
@@ -30,7 +29,11 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/auth/realms/horse-races
 logging:
   level:
     ROOT: INFO

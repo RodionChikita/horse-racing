@@ -42,7 +42,13 @@ import { JockeyListComponent } from './jockey/jockey-list/jockey-list.component'
     DxSelectBoxModule,
     AppRoutingModule
   ],
-  providers: [OwnerListComponent, HorseListComponent],
+  providers: [OwnerListComponent, HorseListComponent,
+      {
+        provide: APP_INITIALIZER,
+        useFactory: initializer,
+        deps: [KeycloakService],
+        multi: true
+      }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
