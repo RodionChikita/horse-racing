@@ -3,6 +3,7 @@ package ru.mpu.horse_races.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import ru.mpu.horse_races.services.RaceResultService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/race_result")
+@PreAuthorize("hasRole('USER')")
 public class RaceResultController {
     private final RaceResultService raceResultService;
 
