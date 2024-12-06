@@ -45,8 +45,8 @@ services:
       SPRING_DATASOURCE_USERNAME: combined_user
       SPRING_DATASOURCE_PASSWORD: combined_password
       KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080/auth
-      KEYCLOAK_REALM: <Ваш_Realm>
-      KEYCLOAK_RESOURCE: <Ваш_Backend_Client_ID>
+      KEYCLOAK_REALM: horse-races
+      KEYCLOAK_RESOURCE: backend
     depends_on:
       - postgres
       - keycloak
