@@ -1,0 +1,65 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  POSTGRES_DB: combined_db
+  POSTGRES_USER: combined_user
+  POSTGRES_PASSWORD: combined_password
+  KEYCLOAK_ADMIN: admin
+  KEYCLOAK_ADMIN_PASSWORD: admin
+
+services:
+  - postgres:latest
+
+before_script:
+  - echo "Setting up the environment"
+
+build_backend:
+  stage: build
+  image: maven:3.8.1-jdk-11
+  script:
+    - cd backend/horse-races
+    - mvn clean package
+  artifacts:
+    paths:
+      - backend/horse-races/target/*.jar
+
+build_frontend:
+  stage: build
+  image: node:14
+  script:
+    - cd frontend/horse-races
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/horse-races/dist/
+
+test_backend:
+  stage: test
+  image: openjdk:11-jre
+  dependencies:
+    - build_backend
+  script:
+    - java -jar backend/horse-races/target/your-backend-application.jar --spring.profiles.active=test
+
+test_frontend:
+  stage: test
+  image: node:14
+  dependencies:
+    - build_frontend
+  script:
+    - cd frontend/horse-races
+    - npm run test -- --watch=false
+
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker-compose up -d
+  only:
+    - feature # или ваша основная ветка
